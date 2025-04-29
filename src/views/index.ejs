@@ -1,0 +1,17 @@
+<%- include('./partials/_header.ejs') %>
+
+<%- include('./partials/_navbar.ejs') %>
+
+<body>
+
+    <h2>Hoşgeldin : <%= name %></h2>
+
+    <% if (idAdmin) { %>
+        <% allUser.forEach(user => { %>
+            <li> <%= user %> </li>
+        <% }) %>
+    <% } %>
+
+</body>
+</html>
+
