@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
+const { contactController } = require('../controllers/contact.controller');
 
-const sendEmail = async ({ name, email, subject, message }) => {
+const sendEmailLogic = async ({ name, email, subject, message }) => {
     try {
         const outputMessage = `
       <h1>MAIL Details</h1>
@@ -37,5 +38,21 @@ const sendEmail = async ({ name, email, subject, message }) => {
         throw error;
     }
 };
+
+const sendEmail = async (req, res) => {
+    try {
+        const { name, email, subject, message } = req.body;
+
+        const info = await sendEmailLogic({ name, email, subject, message });
+        console.log({ success: true, messageId: info.messageId });
+        res.status(200).redirect('/contact');
+    } catch (error) {
+        console.error("Email sending failed:", error);
+        res.status(500).json({ error: "Mail gönderme başarısız." });
+    }
+};
+
+module.exports = { sendEmail };
+
 
 module.exports = { sendEmail };

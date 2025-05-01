@@ -29,7 +29,9 @@ const getDashboardPage = (req , res) => {
 
 const getContactPage = (req , res) => {
     res.render('contact' , {
-        page_name: 'contact'
+        page_name: 'contact',
+        name: req.name || '',
+        email: req.email || ''
     });
 }
 
