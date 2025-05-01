@@ -27,4 +27,10 @@ const getDashboardPage = (req , res) => {
     });
 }
 
-module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage };
+const getContactPage = (req , res) => {
+    res.render('contact' , {
+        page_name: 'contact'
+    });
+}
+
+module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage };
