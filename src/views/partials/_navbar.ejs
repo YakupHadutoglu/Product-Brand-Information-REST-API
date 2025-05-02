@@ -34,7 +34,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link <%= page_name === 'contact' ? 'active' : ''%>" href="/contact">Contact
-                        &#11035;</a>
+                        &#x2709;</a>
 
                 </li>
 
@@ -48,8 +48,51 @@
 
                 <% } %>
 
+                <!-- <% if (idAdmin) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" onclick="window.open('/admin', 'AdminPanel', 'width=800,height=600,scrollbars=yes,resizable=yes'); return false;">
+                            Admin Panel
+                        </a>
+                    </li>
+                <% } %> -->
+
+                <% if (idAdmin) { %>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openAdminPanel(); return false;">Admin Panel</a>
+                    </li>
+                <% } %>
+
             </ul>
+
         </div>
         <a class="navbar-brand" href="/">Product Brand İnformation System</a>
     </div>
 </nav>
+
+<script>
+    function openAdminPanel() {
+    const w = 650, h = 450;
+    const left = (screen.width - w) / 2;
+    const top  = (screen.height - h) / 2;
+    const features = [
+        `width=${w}`,
+        `height=${h}`,
+        `left=${left}`,
+        `top=${top}`,
+        'toolbar=0',
+        'menubar=0',
+        'location=0',
+        'status=0',
+        'scrollbars=0',
+        'resizable=0'
+    ].join(',');
+
+    const win = window.open('/admin', 'AdminPanel', features);
+
+      // yüklendiğinde köşeleri yuvarla
+    win.addEventListener('load', () => {
+        const docEl = win.document.documentElement;
+        docEl.style.overflow = 'hidden';
+    });
+    }
+</script>
