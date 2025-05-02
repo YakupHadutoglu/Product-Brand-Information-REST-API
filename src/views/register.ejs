@@ -1,34 +1,103 @@
 <%- include('./partials/_header.ejs') %>
-<%- include('./partials/_navbar.ejs') %>
-<body>
+    <%- include('./partials/_navbar.ejs') %>
 
-    <div class="container mt-5 lg-4 bg-dark text-light rounded p-4 ">
-        <h1 class="text-center">Register</h1>
-        <form action="/register" method="POST">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-        <div class="mt-3">
-            <p>Already have an account? <a href="/login">Login here</a></p>
-        </div>
-        <div class="mt-3">
-            <p>Forgot your password? <a href="/forgot-password">Reset it here</a></p>
-        </div>
-    </div>
+        <body>
 
-     <!-- Bootstrap JS -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-     integrity="sha384-..." crossorigin="anonymous"></script>
-</body>
-</html>
+            <div class="container mt-5 lg-4 bg-dark text-light rounded p-4 ">
+                <h1 class="text-center">Register</h1>
+                <form action="/register" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <!-- Şifre Güç Göstergesi -->
+                        <div class="mt-2">
+                            <div class="progress" style="height: 10px;">
+                                <div id="strength-fill" class="progress-bar" role="progressbar" style="width: 0%;"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <p id="strength-text" class="mt-1">Şifre Gücü: </p>
+                        </div>
+
+                        <div id="password-requirements" style="margin-top: 8px; font-size: 14px; display: flex; flex-direction: row; justify-content: space-between; ">
+                            <p id="req-length">❌ En az 8 karakter</p>
+                            <p id="req-upper">❌ En az 1 büyük harf (A-Z)</p>
+                            <p id="req-lower">❌ En az 1 küçük harf (a-z)</p>
+                            <p id="req-digit">❌ En az 1 rakam (0-9)</p>
+                            <p id="req-symbol">❌ En az 1 özel karakter (!@#$...)</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <div class="mt-3">
+                    <p>Already have an account? <a href="/login">Login here</a></p>
+                </div>
+            </div>
+
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-..." crossorigin="anonymous"></script>
+
+                <script src="/zxcvbn.password.js"></script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const passwordInput = document.getElementById("password");
+                        const strengthFill = document.getElementById("strength-fill");
+                        const strengthText = document.getElementById("strength-text");
+
+                        const reqLength = document.getElementById("req-length");
+                        const reqUpper = document.getElementById("req-upper");
+                        const reqLower = document.getElementById("req-lower");
+                        const reqDigit = document.getElementById("req-digit");
+                        const reqSymbol = document.getElementById("req-symbol");
+
+                        const levels = ["Çok Zayıf", "Zayıf", "Orta", "Güçlü", "Çok Güçlü"];
+                        const colors = ["#ff4d4d", "#ff944d", "#ffe44d", "#99e600", "#00b300"];
+
+                        function checkRequirements(password) {
+                            const lengthCheck = password.length >= 8;
+                            const upperCheck = /[A-Z]/.test(password);
+                            const lowerCheck = /[a-z]/.test(password);
+                            const digitCheck = /[0-9]/.test(password);
+                            const symbolCheck = /[^A-Za-z0-9]/.test(password);
+
+                            reqLength.textContent = (lengthCheck ? "✅" : "❌") + " En az 8 karakter";
+                            reqUpper.textContent = (upperCheck ? "✅" : "❌") + " En az 1 büyük harf (A-Z)";
+                            reqLower.textContent = (lowerCheck ? "✅" : "❌") + " En az 1 küçük harf (a-z)";
+                            reqDigit.textContent = (digitCheck ? "✅" : "❌") + " En az 1 rakam (0-9)";
+                            reqSymbol.textContent = (symbolCheck ? "✅" : "❌") + " En az 1 özel karakter (!@#$...)";
+
+                            return lengthCheck && upperCheck && lowerCheck && digitCheck && symbolCheck;
+                        }
+
+                        passwordInput.addEventListener("input", () => {
+                            const value = passwordInput.value;
+                            const result = zxcvbn(value);
+                            let score = result.score;
+
+                            if (!checkRequirements(value) && score > 2) {
+                                score = 2;
+                            }
+
+                            strengthFill.style.width = ((score + 1) * 20) + "%";
+                            strengthFill.style.backgroundColor = colors[score];
+                            strengthText.textContent = "Şifre Gücü: " + levels[score];
+                        });
+                    });
+                </script>
+            <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/zxcvbn-async@1.0.0/dist/zxcvbn-async.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/zxcvbn-async@1.0.0/dist/zxcvbn-async.min.js"></script>
+
+        </body>
+
+        </html>
