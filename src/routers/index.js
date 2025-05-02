@@ -7,6 +7,6 @@ const contact = require('./contact.routes.js');
 
 router.use(page);
 router.use(auth);
-router.use(contact)
+router.use(contact);
 
 module.exports = router;

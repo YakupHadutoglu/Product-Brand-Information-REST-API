@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     idAdmin: {
@@ -29,7 +29,12 @@ const userSchema = new mongoose.Schema({
     sendMailer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mail',
-    }
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
 });
 
 const User = mongoose.model('User', userSchema);
