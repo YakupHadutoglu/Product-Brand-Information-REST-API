@@ -35,4 +35,9 @@ const getContactPage = (req , res) => {
     });
 }
 
-module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage };
+const getAdminPanelPage = (req , res) => {
+    res.render('admin' , {
+        page_name: 'admin',
+    });
+}
+module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage };
