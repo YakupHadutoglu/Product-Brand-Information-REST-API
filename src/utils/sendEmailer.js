@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const { contactController } = require('../controllers/contact.controller');
-
+const Mail = require('../models/Mail.js');
+const { localsİnformation } = require('../middlewares/localsİnformation.js');
 const sendEmailLogic = async ({ name, email, subject, message }) => {
     try {
         const outputMessage = `
@@ -32,6 +33,14 @@ const sendEmailLogic = async ({ name, email, subject, message }) => {
         });
 
         console.log("Message sent: %s", info.messageId);
+
+        await Mail.create({
+            name: name,
+            email: email,
+            subject: subject,
+            message: message,
+            });
+
         return info;
     } catch (error) {
         console.error("Email sending failed:", error);
@@ -42,7 +51,6 @@ const sendEmailLogic = async ({ name, email, subject, message }) => {
 const sendEmail = async (req, res) => {
     try {
         const { name, email, subject, message } = req.body;
-
         const info = await sendEmailLogic({ name, email, subject, message });
         console.log({ success: true, messageId: info.messageId });
         res.status(200).redirect('/contact');
