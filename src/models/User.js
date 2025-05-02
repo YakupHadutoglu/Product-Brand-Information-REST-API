@@ -19,11 +19,19 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     idAdmin: {
-    type: Boolean,
-    default: false
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    sendMailer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mail',
     }
 });
 
-const User = mongoose.model('User' , userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
