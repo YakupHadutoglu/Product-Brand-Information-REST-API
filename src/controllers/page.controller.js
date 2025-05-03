@@ -1,11 +1,9 @@
 const User = require('../models/User');
 
 const getHomPage = async (req , res) => {
-    const allUser = await User.find();
     res.render('index' , {
         page_name: 'home',
         name: req.user.name,
-        allUser
     });
 }
 
@@ -35,9 +33,11 @@ const getContactPage = (req , res) => {
     });
 }
 
-const getAdminPanelPage = (req , res) => {
+const getAdminPanelPage = async (req , res) => {
+    const allUser = await User.find();
     res.render('admin' , {
         page_name: 'admin',
+        allUser
     });
 }
 module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage };
