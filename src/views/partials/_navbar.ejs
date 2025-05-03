@@ -27,28 +27,29 @@
                             &#x1F6E1;</a>
                     </li>
 
-                <% } else { %>
+                    <% } else { %>
 
 
-                <% } %>
+                        <% } %>
 
-                <li class="nav-item">
-                    <a class="nav-link <%= page_name === 'contact' ? 'active' : ''%>" href="/contact">Contact
-                        &#x2709;</a>
+                            <li class="nav-item">
+                                <a class="nav-link <%= page_name === 'contact' ? 'active' : ''%>"
+                                    href="/contact">Contact
+                                    &#x2709;</a>
 
-                </li>
+                            </li>
 
-                <% if (token) { %>
+                            <% if (token) { %>
 
-                    <li class="nav-item">
-                        <a class="nav-link" aria-disabled="true" href="/logout">Logout &#x21AA;</a>
-                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-disabled="true" href="/logout">Logout &#x21AA;</a>
+                                </li>
 
-                <% } else { %>
+                                <% } else { %>
 
-                <% } %>
+                                    <% } %>
 
-                <!-- <% if (idAdmin) { %>
+                                        <!-- <% if (idAdmin) { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin" onclick="window.open('/admin', 'AdminPanel', 'width=800,height=600,scrollbars=yes,resizable=yes'); return false;">
                             Admin Panel
@@ -56,11 +57,12 @@
                     </li>
                 <% } %> -->
 
-                <% if (idAdmin) { %>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" onclick="openAdminPanel(); return false;">Admin Panel</a>
-                    </li>
-                <% } %>
+                                        <% if (idAdmin) { %>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link"
+                                                    onclick="openAdminPanel(); return false;">Admin Panel</a>
+                                            </li>
+                                            <% } %>
 
             </ul>
 
@@ -70,29 +72,31 @@
 </nav>
 
 <script>
-    function openAdminPanel() {
-    const w = 650, h = 450;
-    const left = (screen.width - w) / 2;
-    const top  = (screen.height - h) / 2;
+function openAdminPanel() {
+    const w = screen.availWidth;
+    const h = screen.availHeight;
+
     const features = [
         `width=${w}`,
         `height=${h}`,
-        `left=${left}`,
-        `top=${top}`,
+        `left=0`,
+        `top=0`,
         'toolbar=0',
         'menubar=0',
         'location=0',
         'status=0',
-        'scrollbars=0',
-        'resizable=0'
+        'scrollbars=1',
+        'resizable=1'
     ].join(',');
 
     const win = window.open('/admin', 'AdminPanel', features);
 
-      // yüklendiğinde köşeleri yuvarla
-    win.addEventListener('load', () => {
-        const docEl = win.document.documentElement;
-        docEl.style.overflow = 'hidden';
-    });
+    if (win) {
+        win.moveTo(0, 0);         
+        win.resizeTo(w, h);
+        win.focus();
+    } else {
+        alert("Tarayıcı açılır pencereyi engelledi.");
     }
+}
 </script>
