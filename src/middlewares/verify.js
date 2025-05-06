@@ -4,7 +4,7 @@ const verifyToken = (req, res, next) => {
 
     const token = req.cookies.token;
 
-    console.log('Token:', token);  // Token'ı loglayarak kontrol edelim
+    console.log('Token:', token); 
 
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
@@ -18,24 +18,24 @@ const verifyToken = (req, res, next) => {
     });
 }
 
-const verifyUser = (req , res , next) => {
-    verifyToken(req , res , () => {
-        if(req.user.id === req.params.id || req.user.idAdmin) {
+const verifyUser = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.user.id === req.params.id || req.user.idAdmin) {
             next();
         } else {
-            res.status(403).json({ message: 'You are not allowed to do thad!'});
+            res.status(403).json({ message: 'You are not allowed to do thad!' });
         }
     });
 }
 
-const verifyAdmin = (req , res , next) => {
-    verifyToken(req , res , () => {
-        if(req.user.idAdmin) {
+const verifyAdmin = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.user.idAdmin) {
             next();
         } else {
-            res.status(403).json({ message: 'You are not allowed to do thad!'});
+            res.status(403).json({ message: 'You are not allowed to do thad!' });
         }
     });
 }
 
-module.exports = {verifyToken , verifyUser , verifyAdmin}
+module.exports = { verifyToken, verifyUser, verifyAdmin }

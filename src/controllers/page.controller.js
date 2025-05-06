@@ -20,8 +20,10 @@ const getRegisterPage = (req , res) => {
 }
 
 const getDashboardPage = (req , res) => {
+    const user = req.user;
     res.render('dashboard' , {
-        page_name: 'dashboard'
+        page_name: 'dashboard',
+        user: user,
     });
 }
 
@@ -40,4 +42,9 @@ const getAdminPanelPage = async (req , res) => {
         allUser
     });
 }
-module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage };
+
+const getVerifyPage = (req, res) => {
+    res.render('verify', { email: req.session.user.email });
+};
+
+module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage , getVerifyPage };

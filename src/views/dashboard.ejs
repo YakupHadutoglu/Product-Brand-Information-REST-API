@@ -2,12 +2,33 @@
 
 <%- include('./partials/_navbar.ejs') %>
 
-<body>
+    <body>
 
-    <p> Kullanıcı Adı: <%= user %> </p>
-    <p> ID: <%= id %> </p>
-    <p> Email: <%= email %> </p>
-    <p> Token: <%= token %> </p>
+      <% if (user.approvedStatus===false) { %>
+        <!-- Modal -->
+        <div class="modal show" tabindex="-1" style="display:block; background: rgba(0,0,0,0.5);">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Hesabınızı Doğrulayın</h5>
+              </div>
+              <div class="modal-body">
+                <p>Hesabınız henüz doğrulanmamış. Lütfen e-posta adresinize gönderilen bağlantıya tıklayarak onaylayın.
+                </p>
+                <p>
+                  <%= user.approvedStatus %>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <form action="/resend-verification" method="POST">
+                  <input type="hidden" name="email" value="<%= user.email %>">
+                  <button type="submit" class="btn btn-primary">E-postayı Tekrar Gönder</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
 
-</body>
-</html>
+    </body>
+    </html>

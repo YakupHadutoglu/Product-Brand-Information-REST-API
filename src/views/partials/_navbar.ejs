@@ -7,13 +7,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link <%= page_name === 'home' ? 'active' : ''%>" aria-current="page" href="/">Home
-                        &#127968;</a>
+                    <a class="nav-link <%= page_name === 'home' ? 'active' : ''%>" aria-current="page" href="/">Home &#127968;</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= page_name === 'dashboard' ? 'active' : ''%>" href="/dashboard">Dashboard
-                        &#11035;</a>
-
+                    <a class="nav-link <%= page_name === 'dashboard' ? 'active' : ''%>" href="/dashboard">Dashboard &#11035;</a>
                 </li>
 
                 <% if (!token) { %>
@@ -27,10 +24,7 @@
                             &#x1F6E1;</a>
                     </li>
 
-                    <% } else { %>
-
-
-                        <% } %>
+                    <% } %>
 
                             <li class="nav-item">
                                 <a class="nav-link <%= page_name === 'contact' ? 'active' : ''%>"
@@ -45,22 +39,12 @@
                                     <a class="nav-link" aria-disabled="true" href="/logout">Logout &#x21AA;</a>
                                 </li>
 
-                                <% } else { %>
-
-                                    <% } %>
-
-                                        <!-- <% if (idAdmin) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin" onclick="window.open('/admin', 'AdminPanel', 'width=800,height=600,scrollbars=yes,resizable=yes'); return false;">
-                            Admin Panel
-                        </a>
-                    </li>
-                <% } %> -->
+                                <% } %>
 
                                         <% if (idAdmin) { %>
                                             <li class="nav-item">
                                                 <a href="#" class="nav-link"
-                                                    onclick="openAdminPanel(); return false;">Admin Panel</a>
+                                                    onclick="openAdminPanel(); return false;">Admin Panel &#x1F9D1;&#x200D;&#x1F4BB;</a>
                                             </li>
                                             <% } %>
 
@@ -92,11 +76,11 @@ function openAdminPanel() {
     const win = window.open('/admin', 'AdminPanel', features);
 
     if (win) {
-        win.moveTo(0, 0);         
+        win.moveTo(0, 0);
         win.resizeTo(w, h);
         win.focus();
     } else {
-        alert("Tarayıcı açılır pencereyi engelledi.");
+        alert("The browser blocked the pop-up.");
     }
 }
 </script>
