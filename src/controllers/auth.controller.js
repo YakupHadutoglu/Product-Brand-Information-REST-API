@@ -25,8 +25,7 @@ const createUser = async (req, res) => {
             password: hashedPassword
         });
 
-        const token = jwt.sign({ id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        const token = jwt.sign({ id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email , approvedStatus: user.approvedStatus}, process.env.JWT_SECRET, { expiresIn: "7d" });
         console.log('>>> Generated token:', token);
 
 
@@ -40,8 +39,6 @@ const createUser = async (req, res) => {
             sameSite: 'strict',
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
-
-
 
         console.log('kişi başarıyla oluşturuldu');
 
@@ -65,13 +62,13 @@ const loginUser = async (req, res) => {
 
         if (!isMatch) return res.status(400).json({ message: 'Password is incorrect' });
 
-        const token = jwt.sign({ id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        console.log('>>> Generated token:', token);
+        const token = jwt.sign({ id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email , approvedStatus: user.approvedStatus }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
+        console.log('>>> Generated token:', token);
         console.log('JWT_SECRET:', process.env.JWT_SECRET);
         console.log('Login user:', user);
         console.log('Generated token:', token);
+
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production' ? true : false,
@@ -79,10 +76,14 @@ const loginUser = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
-        res.redirect('/'); // veriyi frontend'de alırsın
+        if (user.isVerified) {
+            return res.redirect('/dashboard');
+        }
+
+        req.session.user = user;
+        res.redirect('/verify');
 
         console.log('kişi başarıyla giriş yaptı');
-
 
     } catch (error) {
         console.error(error);

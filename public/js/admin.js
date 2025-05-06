@@ -1,3 +1,4 @@
+//* Navigation Bar
 let usersBtn = document.querySelector("#users-btn");
 let oneBtn= document.querySelector("#one-btn");
 let twoBtn = document.querySelector("#two-btn");
@@ -57,3 +58,18 @@ function setupNavbarClicks() {
 
 initializeScreens();
 setupNavbarClicks();
+
+//* User Modal
+document.addEventListener('DOMContentLoaded', function () {
+    const userModal = document.getElementById('userModal');
+    userModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        document.getElementById('modalUserName').textContent = button.getAttribute('data-name');
+        document.getElementById('modalUserEmail').textContent = button.getAttribute('data-email');
+        document.getElementById('modalUserID').textContent = button.getAttribute('data-id');
+        document.getElementById('modalGoogleID').textContent = button.getAttribute('data-googleid');
+        document.getElementById('modalAdminStatus').textContent = button.getAttribute('data-admin');
+        document.getElementById('modalCreatedAt').textContent = button.getAttribute('data-created');
+    });
+});

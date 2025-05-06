@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         sparse: true
     },
+    approvedStatus: {
+        type:  Boolean,
+        default: false,
+    }
 });
 
 const User = mongoose.model('User', userSchema);
