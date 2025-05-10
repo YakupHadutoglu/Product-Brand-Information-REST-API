@@ -1,0 +1,120 @@
+<%- include('./partials/_header.ejs') %>
+    <%- include('./partials/_navbar.ejs') %>
+
+        <!DOCTYPE html>
+        <html lang="tr">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <!-- Google Font -->
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+                rel="stylesheet">
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <!-- Animate.css & AOS -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+            <link rel="stylesheet" href="/css/contribution.css">
+        </head>
+
+        <body>
+            <div id="main-content">
+                <div id="contribute" data-aos="fade-up">
+                    <h2>Katkıda Bulun</h2>
+                    <div class="contrib-tabs">
+                        <button data-tab="product" class="active">Ürün/Marka</button>
+                        <button data-tab="idea">Yeni Fikir</button>
+                        <button data-tab="service">API Servis</button>
+                        <button data-tab="donation">Bağış</button>
+                    </div>
+                    <!-- Ürün/Marka -->
+                    <form id="form-product" class="contrib-form active" data-aos="fade-right">
+                        <div class="form-group">
+                            <label>Marka</label>
+                            <input list="brands" placeholder="Mevcut seçin veya yeni ekleyin...">
+                            <datalist id="brands">
+                                <option>Brand A</option>
+                                <option>Brand B</option>
+                                <option>Brand C</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label>Ürün</label>
+                            <input type="text" placeholder="Ürün adı...">
+                        </div>
+                        <div class="form-group">
+                            <label>Detaylı Açıklama</label>
+                            <textarea placeholder="Ürünün tüm özellikleri..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
+                    </form>
+                    <!-- Yeni Fikir -->
+                    <form id="form-idea" class="contrib-form" data-aos="fade-right">
+                        <div class="form-group">
+                            <label>Fikir Başlığı</label>
+                            <input type="text" placeholder="Başlık...">
+                        </div>
+                        <div class="form-group">
+                            <label>Detaylar</label>
+                            <textarea placeholder="Fikrin detaylarını yazın..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
+                    </form>
+                    <!-- API Servis -->
+                    <form id="form-service" class="contrib-form" data-aos="fade-right">
+                        <div class="form-group"><label>Servis Adı</label><input type="text" placeholder="Servis adı...">
+                        </div>
+                        <div class="form-group"><label>Base URL</label><input type="url"
+                                placeholder="https://api.example.com"></div>
+                        <div class="form-group"><label>Authentication</label><select>
+                                <option>API Key</option>
+                                <option>OAuth2</option>
+                                <option>JWT</option>
+                            </select></div>
+                        <div class="form-group"><label>Versiyon</label><input type="text" placeholder="v1, v2..."></div>
+                        <div class="form-group"><label>Rate Limit (istek/s)</label><input type="number"
+                                placeholder="100"></div>
+                        <div class="form-group"><label>Dokümantasyon URL</label><input type="url"
+                                placeholder="https://docs.example.com"></div>
+                        <button type="button" id="generate-key" class="btn btn-primary btn-submit">API Key
+                            Oluştur</button>
+                        <div id="apikey-display" style="display:none;"></div>
+                        <button type="submit" class="btn btn-secondary btn-submit mt-3">Servisi Kaydet</button>
+                    </form>
+                    <!-- Bağış -->
+                    <form id="form-donation" class="contrib-form" data-aos="fade-right">
+                        <div class="form-group"><label>Bağış Tutarı (TL)</label><input type="number"
+                                placeholder="Örn: 50"></div>
+                        <div class="form-group"><label>Bağış Türü</label><select>
+                                <option>%10 Bağış</option>
+                                <option>%20 Bağış</option>
+                                <option>Özel Miktar</option>
+                            </select></div>
+                        <div class="form-group"><label>Ödeme Yöntemi</label><select>
+                                <option>PayPal</option>
+                                <option>Stripe</option>
+                                <option>Bank Transfer</option>
+                            </select></div>
+                        <div class="form-group"><label>Email (Gönderim için)</label><input type="email"
+                                placeholder="example@mail.com"></div>
+                        <div class="form-group"><label>Mesajınız</label><textarea
+                                placeholder="Mesajınızı yazın..."></textarea></div>
+                        <button type="submit" class="btn btn-primary btn-submit">Bağış Yap</button>
+                    </form>
+                </div>
+                <canvas class="confetti"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <script src="/js/contribution.js"></script>
+            <script>
+
+                // Generate realistic API key within service form
+                //! api key için utilsden endpoint verilecek clientda yakalanacak
+
+            </script>
+        </body>
+
+        </html>
