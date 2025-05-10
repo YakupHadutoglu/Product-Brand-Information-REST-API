@@ -1,34 +1,36 @@
 <%- include('./partials/_header.ejs') %>
 
-<%- include('./partials/_navbar.ejs') %>
+  <%- include('./partials/_navbar.ejs') %>
 
     <body>
 
-      <% if (user.approvedStatus===false) { %>
+      <% if (!payload.approvedStatus) { %>
         <!-- Modal -->
         <div class="modal show" tabindex="-1" style="display:block; background: rgba(0,0,0,0.5);">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Hesabınızı Doğrulayın</h5>
-              </div>
-              <div class="modal-body">
-                <p>Hesabınız henüz doğrulanmamış. Lütfen e-posta adresinize gönderilen bağlantıya tıklayarak onaylayın.
-                </p>
-                <p>
-                  <%= user.approvedStatus %>
-                </p>
-              </div>
-              <div class="modal-footer">
-                <form action="/resend-verification" method="POST">
-                  <input type="hidden" name="email" value="<%= user.email %>">
-                  <button type="submit" class="btn btn-primary">E-postayı Tekrar Gönder</button>
-                </form>
+
+          <div class="modal show d-flex align-items-center justify-content-center" tabindex="-1" style="display: flex; background: rgba(0,0,0,0.5); height: 100vh;">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Hesabınızı Doğrulayın</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Hesabınız henüz doğrulanmamış. Lütfen e-posta adresinize gönderilen bağlantıya tıklayarak onaylayın.</p>
+                  <p><%= user.approvedStatus %></p>
+                </div>
+                <div class="modal-footer">
+                  <form action="/resend-verification" method="POST">
+                    <input type="hidden" name="email" value="<%= user.email %>">
+                    <button type="submit" class="btn btn-primary">E-postayı Tekrar Gönder</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <% } %>
 
+
     </body>
+
     </html>

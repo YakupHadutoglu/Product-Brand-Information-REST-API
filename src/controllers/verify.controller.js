@@ -31,33 +31,32 @@ const confirmVerification = async (req, res) => {
     try {
         const email = req.query.email;
         const user = await User.findOne({ email });
+        if (!user) return res.send('Kullanıcı bulunamadı');
 
-        if (!user) {
-            return res.send('Kullanıcı bulunamadı');
+        if (!user.approvedStatus) {
+            user.approvedStatus = true;
+            await user.save();
+            console.log('>> Doğrulandı:', user);         // <- DB’de doğru kaydedilip kaydedilmediğini konsolda görün
         }
 
-        if (user.isVerified) {
-            //* User already verified do not repeat
-            const token = generateJWT(user);
-            return res.redirect(`/dashboard?token=${token}`);
-        }
-
-        user.approvedStatus = true;
-        await user.save();
-
+        // Yeni JWT oluşturup cookie’ye koyun
         const token = generateJWT(user);
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 // 1 saat
+        });
 
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // 1 saat
-        res.redirect('/dashboard');
+        return res.redirect('/dashboard');
     } catch (err) {
         console.error(err);
-        res.status(500).send('Bir hata oluştu.');
+        return res.status(500).send('Bir hata oluştu.');
     }
 };
 
+
 const generateJWT = (user) => {
     const token = jwt.sign(
-        { id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email , approvedStatus: user.approvedStatus }, 
+        { id: user._id, idAdmin: user.idAdmin, name: user.name, email: user.email, approvedStatus: user.approvedStatus }, /* id: user._id, idAdmin: user.idAdmin , name: user.name , email: user.email */
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );

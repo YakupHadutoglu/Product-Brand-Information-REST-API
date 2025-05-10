@@ -1,9 +1,11 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const getHomPage = async (req , res) => {
+    const user = req.user;
     res.render('index' , {
         page_name: 'home',
-        name: req.user.name,
+       user: user,
     });
 }
 
@@ -20,10 +22,11 @@ const getRegisterPage = (req , res) => {
 }
 
 const getDashboardPage = (req , res) => {
-    const user = req.user;
+    const token = req.cookies.token;
+    const payload = jwt.verify(token , process.env.JWT_SECRET)
     res.render('dashboard' , {
         page_name: 'dashboard',
-        user: user,
+        payload: payload,
     });
 }
 
@@ -47,4 +50,16 @@ const getVerifyPage = (req, res) => {
     res.render('verify', { email: req.session.user.email });
 };
 
-module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage , getVerifyPage };
+const getbrandProductPage = (req , res) => {
+    res.render('brandProduct' , {
+        page_name: 'brandProduct'
+    });
+}
+
+const getContributionPage = (req , res) => {
+    res.render('contribution' , {
+        page_name: 'contribution'
+    });
+}
+
+module.exports = { getHomPage , getLoginPage , getRegisterPage , getDashboardPage , getContactPage , getAdminPanelPage , getVerifyPage , getbrandProductPage , getContributionPage };
