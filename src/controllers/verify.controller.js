@@ -45,8 +45,13 @@ const confirmVerification = async (req, res) => {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 // 1 saat
         });
+        console.log('>> Yeni JWT oluşturuldu:', token); // <- Konsolda yeni token’ı görün
 
-        return res.redirect('/dashboard');
+
+        return setTimeout(() => {
+            res.redirect('/dashboard');
+        }, 100);
+
     } catch (err) {
         console.error(err);
         return res.status(500).send('Bir hata oluştu.');

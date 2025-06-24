@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
-const localsİnformation = require('../middlewares/localsİnformation.js');
+const localsİnformation = require('../middlewares/localsInformation.js');
 const userID  = localsİnformation.userID;
 const jwt = require('jsonwebtoken');
 
