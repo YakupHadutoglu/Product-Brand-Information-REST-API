@@ -15,7 +15,7 @@ const app = express();
 const connectDB = require('./config/db.js');
 require('./config/passport');
 const router = require('./routers/index.js');
-const { localsİnformation } = require('./middlewares/localsİnformation.js');
+const { localsİnformation } = require('./middlewares/localsInformation.js');
 
 // Middleware
 app.use(express.json());
@@ -27,6 +27,7 @@ app.use(session({ secret: process.env.JWT_SECRET , resave: false , saveUninitial
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.set("view engine" , "ejs");
 app.set('views' , path.join(__dirname , 'views'));

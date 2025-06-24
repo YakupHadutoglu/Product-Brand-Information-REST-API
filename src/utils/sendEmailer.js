@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const { contactController } = require('../controllers/contact.controller');
 const Mail = require('../models/Mail.js');
-const { localsİnformation } = require('../middlewares/localsİnformation.js');
+const { localsİnformation } = require('../middlewares/localsInformation.js');
 const sendEmailLogic = async ({ name, email, subject, message }) => {
     try {
         const outputMessage = `

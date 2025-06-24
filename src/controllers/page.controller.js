@@ -24,9 +24,15 @@ const getRegisterPage = (req , res) => {
 const getDashboardPage = (req , res) => {
     const token = req.cookies.token;
     const payload = jwt.verify(token , process.env.JWT_SECRET)
+    console.log(payload);
+    console.log(payload.approvedStatus);
+    console.log(payload.idAdmin);
+    console.log(req.user.approvedStatus)
+
     res.render('dashboard' , {
         page_name: 'dashboard',
         payload: payload,
+        user: req.user,
     });
 }
 

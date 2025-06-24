@@ -23,6 +23,6 @@ router.post(
 );
 
 
-router.get('/verify/confirm', noCache, authenticateUser, confirmVerification);
+router.get('/verify/confirm', noCache , confirmVerification);
 
 module.exports = router;
