@@ -21,6 +21,8 @@ passport.use(new GoogleStrategy({
                     googleId: profile.id,
                     name: profile.displayName,
                     email: profile.emails[0].value,
+                    approvedStatus: true, // Default to true for new users,
+                    idAdmin: false, // Default to false for new users
                 });
             }
 
@@ -29,7 +31,9 @@ passport.use(new GoogleStrategy({
                     id: user._id,
                     name: user.name,
                     email: user.email,
-                    idAdmin: user.idAdmin
+                    idAdmin: user.idAdmin,
+                    approvedStatus: user.approvedStatus,
+                    idAdmin: user.idAdmin,
                 },
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }

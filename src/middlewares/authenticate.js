@@ -28,6 +28,7 @@ const authenticateInUser = (req, res, next) => {
 const authenticateApprovedStatus = (req, res, next) => {
     const token = req.cookies.token;
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    console.error('token : ' , payload);
     if (!payload.approvedStatus) {
         return res.redirect('/dashboard');
     }
