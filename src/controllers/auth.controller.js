@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
 
         console.log('kişi başarıyla oluşturuldu');
 
-        return res.status(201).redirect('/login');
+        return res.redirect('/dashboard');
 
     } catch (error) {
         console.error(error);
