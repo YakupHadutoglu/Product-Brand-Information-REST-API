@@ -15,9 +15,9 @@ router.route('/contact').get(noCache , autoContactForm , getContactPage);
 router.route('/admin').get(noCache , authenticateUser , verifyAdmin , getAdminPanelPage);
 router.route('/verify').get(noCache, authenticateUser, (req, res) => {
     if (req.user.approvedStatus) return res.redirect('/dashboard');
-    res.redirect('/verify', { email: req.user.email });
+    res.render('verify', { email: req.user.email });
 });
-router.route('/brand-Product').get(noCache , authenticateApprovedStatus , getbrandProductPage);
-router.route('/contribution').get(noCache , authenticateApprovedStatus , getContributionPage);
+router.route('/brand-Product').get(noCache , authenticateUser , authenticateApprovedStatus , getbrandProductPage);
+router.route('/contribution').get(noCache , authenticateUser , authenticateApprovedStatus ,  getContributionPage);
 
 module.exports = router;

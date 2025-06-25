@@ -5,7 +5,7 @@ const getHomPage = async (req , res) => {
     const user = req.user;
     res.render('index' , {
         page_name: 'home',
-       user: user,
+        user: user,
     });
 }
 
