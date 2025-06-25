@@ -75,13 +75,9 @@ const loginUser = async (req, res) => {
             sameSite: 'strict',
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
-        
-        if (user.isVerified) {
-            return res.render('dashboard');
-        }
 
         req.session.user = user;
-        res.redirect('/verify');
+        res.redirect('/dashboard');
 
         console.log('kişi başarıyla giriş yaptı');
 

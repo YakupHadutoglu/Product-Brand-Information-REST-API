@@ -45,15 +45,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% allUser.forEach((user, index)=> { %>
-                                        <tr data-bs-toggle="modal" data-bs-target="#userModal"
+                                    <% allUser.forEach((user, index)=> {
+                                        // satır rengi
+                                        let rowClass = '';
+                                        if (user.idAdmin) {
+                                        rowClass = 'table-primary'; // admin ⇒ mavi
+                                        } else if (!user.approvedStatus) {
+                                        rowClass = 'table-danger'; // onaysız ⇒ kırmızı
+                                        }
+                                        %>
+                                        <tr class="<%= rowClass %>" data-bs-toggle="modal" data-bs-target="#userModal"
                                             data-name="<%= user.name %>" data-email="<%= user.email %>"
-                                            data-id="<%= user._id %>"
-                                            data-googleid="<%= user.googleId ? user.googleId : '-' %>"
+                                            data-id="<%= user._id %>" data-googleid="<%= user.googleId || '-' %>"
                                             data-admin="<%= user.idAdmin %>"
                                             data-approved="<%= user.approvedStatus ? 'Approved' : 'Not Approved' %>"
                                             data-created="<%= new Date(user.createdAt).toLocaleDateString('tr-TR') %>"
-                                            style="cursor: pointer;">
+                                            style="cursor:pointer;">
                                             <th scope="row">
                                                 <%= index + 1 %>
                                             </th>
@@ -67,24 +74,26 @@
                                                 <%= user._id %>
                                             </td>
                                             <td>
-                                                <%= user.googleId ? user.googleId : '-' %>
+                                                <%= user.googleId || '-' %>
                                             </td>
                                             <td>
                                                 <%= user.idAdmin %>
                                             </td>
                                             <td>
-                                                <%= new Date(user.createdAt).toLocaleDateString("tr-TR") %>
+                                                <%= new Date(user.createdAt).toLocaleDateString('tr-TR') %>
                                             </td>
                                             <td>
                                                 <%= user.approvedStatus ? 'Approved' : 'Not Approved' %>
+                                            </td>
                                         </tr>
-                                        <% }) %>
+                                        <% }); %>
                                 </tbody>
+
                             </table>
                         </div>
                         <% } else { %>
                             <div class="alert alert-warning mt-3">Unaouthorizotion access</div>
-                        <% } %>
+                            <% } %>
                 </div>
                 <div class="screen" id="one-screen">
                     <h3>-</h3>
