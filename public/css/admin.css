@@ -109,3 +109,40 @@ body {
 .screen::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.35); /* Hover olduğunda biraz daha görünür */
 }
+
+ .model-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+    }
+    .model-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .code-container {
+        position: relative;
+    }
+    .code-container:before {
+        content: 'JavaScript';
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #495057;
+        color: #dee2e6;
+        padding: 2px 8px;
+        font-size: 0.75rem;
+        border-bottom-left-radius: 4px;
+    }
+    .text-gradient {
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 700;
+    }
+    pre code {
+        font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        display: block;
+        overflow-x: auto;
+    }
