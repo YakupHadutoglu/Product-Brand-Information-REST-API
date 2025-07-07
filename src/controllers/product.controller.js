@@ -20,7 +20,14 @@ const getProducts = async (req, res) => {
         // Let's check the return value from the search function
         console.log('Products returned from the search function:', products);
 
-        res.json(products);
+        res.render('brandProduct', {
+            products: products || [],
+            title: 'Brand Products',
+            token: req.session.token, // Oturum bilgisi
+            idAdmin: req.session.isAdmin // Admin kontrolü
+        });
+
+
     } catch (error) {
         console.error('API Error (product.controller.js):', {
             message: error.message,
