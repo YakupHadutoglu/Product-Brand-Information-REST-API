@@ -1,49 +1,644 @@
-<%- include('./partials/_header.ejs') %>
-<%- include('./partials/_navbar.ejs') %>
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Sorgulama ve Marka Arayüzü</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #f72585;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-img-container {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-top {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-lineclamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .card-description {
+            font-size: 0.8rem;
+            color: #666;
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-lineclamp: 3;
+            -webkit-box-orient: vertical;
+            margin-bottom: 12px;
+        }
+
+        .price-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .current-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 0.85rem;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+        }
+
+        .rating-value {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            padding: 8px;
+        }
+
+        .btn-favorite {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+
+        .btn-favorite.active {
+            background-color: #fff0f3;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-favorite:hover,
+        .btn-favorite.active:hover {
+            background-color: #fff0f3;
+            color: var(--accent-color);
+        }
+
+        .btn-clear {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+        }
+
+        .btn-clear:hover {
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+            color: #495057;
+        }
+
+        .section-tabs {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            font-weight: 500;
+            padding: 12px 20px;
+            transition: var(--transition);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            background: transparent;
+        }
+
+        .nav-tabs .nav-link:hover:not(.active) {
+            color: var(--secondary-color);
+        }
+
+        .brand-btn {
+            border-radius: 30px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+
+        .brand-btn:hover,
+        .brand-btn.active {
+            background: var(--primary-color);
+            color: white !important;
+            border-color: var(--primary-color);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .no-results-container {
+            padding: 50px 20px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .pagination-container {
+            margin-top: 30px;
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .page-link {
+            color: var(--primary-color);
+        }
+
+        .page-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .result-info {
+            background-color: #f0f5ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .card-img-container {
+                height: 180px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .brands-list {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
-  <div class="container py-4">
-    <div class="mb-4 d-flex gap-2">
-      <button id="btn-search" class="btn btn-primary">Sorgu Parametreleri</button>
-      <button id="btn-brands" class="btn btn-outline-primary">Marka Seçimi & Ürünler</button>
-    </div>
+    <!-- Header partial would be included here -->
+    <%- include('./partials/_header') %>
 
-    <!-- Sorgu Parametreleri Bölümü -->
-    <section id="search-screen">
-      <h1 class="mb-4">Sorgu Parametreleri</h1>
-      <!-- http://localhost:5002/api?keyword=test -->
-      <form id="api-form" action="/api" class="mb-5 row g-3 align-items-end">
-        <div class="col-md-3">
-          <input class="form-control" name="keyword" placeholder="Ürün Adı" autocomplete="off" />
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary w-100" type="submit">Sorgula</button>
-        </div>
-      </form>
-      <div id="result-info" class="small text-muted mb-3"></div>
-      <div id="product-results" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4"></div>
-    </section>
+        <!-- Navbar partial would be included here -->
+        <%- include('./partials/_navbar', { page_name: 'brandProduct' , token: token, idAdmin: idAdmin }) %>
 
-    <!-- Marka Seçimi & Ürünler Bölümü -->
-    <section id="brands-screen" style="display:none;">
-      <h1 class="mb-4">Marka Seçimi & Ürünler</h1>
-      <div id="brands-list" class="mb-4 d-flex gap-3 flex-wrap">
-        <%
-          const brands = ['Marka X', 'Marka Y', 'Marka Z'];
-          brands.forEach(b => {
-        %>
-          <button class="btn btn-outline-secondary brand-btn" data-brand="<%= b %>">
-            <%= b %>
-          </button>
-        <% }) %>
-      </div>
-      <div id="brand-products" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4"></div>
-    </section>
-  </div>
+            <div class="loading-overlay" id="loading-overlay">
+                <div class="spinner-border text-primary spinner" role="status">
+                    <span class="visually-hidden">Yükleniyor...</span>
+                </div>
+            </div>
 
-  <script src="/js/brandProduct.js"></script>
+            <div class="container py-4">
+                <div class="section-tabs">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="search-tab" data-bs-toggle="tab"
+                                data-bs-target="#search-screen" type="button" role="tab">
+                                <i class="bi bi-search me-2"></i>Sorgu Parametreleri
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="brands-tab" data-bs-toggle="tab"
+                                data-bs-target="#brands-screen" type="button" role="tab">
+                                <i class="bi bi-tags me-2"></i>Marka Seçimi & Ürünler
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="tab-content" id="myTabContent">
+                    <!-- Search Screen -->
+                    <div class="tab-pane fade show active" id="search-screen" role="tabpanel">
+                        <div class="section-header">
+                            <h1>Sorgu Parametreleri</h1>
+                        </div>
+
+                        <form id="api-form" action="/brand-Product/api" class="mb-4">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-8">
+                                    <label class="form-label">Ürün Adı</label>
+                                    <input class="form-control form-control-lg" name="keyword"
+                                        placeholder="Aramak istediğiniz ürün adını girin..." autocomplete="off">
+                                  </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary btn-lg w-100" type="submit">
+                                        <i class="bi bi-search me-2"></i>Sorgula
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btn-clear" class="btn btn-outline-secondary btn-lg w-100" type="button">
+                                        <i class="bi bi-x-circle me-2"></i>Temizle
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div id="result-info" class="result-info">
+                            <% if (typeof products !=='undefined' && Array.isArray(products) && products.length) { %>
+                                <i class="bi bi-info-circle me-2"></i>
+                                <%= products.length %> ürün bulundu
+                                    <% } else { %>
+                                        <i class="bi bi-exclamation-circle me-2"></i>Sonuç bulunamadı
+                                        <% } %>
+                        </div>
+
+                        <div id="product-results" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                            <% if (typeof products !=='undefined' && Array.isArray(products) && products.length) { %>
+                                <% products.forEach(product=> { %>
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <div class="card-img-container">
+                                                <img src="https:<%= product.imageURL || '/images/no-image.jpg' %>"
+                                                    class="card-img-top" alt="<%= product.name %>"
+                                                    onerror="this.src='/images/no-image.jpg'">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= product.name %>
+                                                </h5>
+
+                                                <% if (product.description) { %>
+                                                    <p class="card-description">
+                                                        <%= product.description.substring(0, 120) +
+                                                            (product.description.length> 120 ? '...' : '')
+                                                            %>
+                                                    </p>
+                                                    <% } %>
+
+                                                        <div class="price-container">
+                                                            <span class="current-price">
+                                                                <%= product.price %>
+                                                                    <%= product.currency %>
+                                                            </span>
+                                                            <% if (product.originalData &&
+                                                                product.originalData.promotionPrice &&
+                                                                product.originalData.price) { %>
+                                                                <span class="original-price">
+                                                                    <%= product.originalData.price %>
+                                                                </span>
+                                                                <% } %>
+                                                        </div>
+
+                                                        <% if (product.originalData &&
+                                                            product.originalData.averageStarRate) { %>
+                                                            <div class="rating-container">
+                                                                <div class="rating-stars">
+                                                                    <% for (let i=1; i <=5; i++) { %>
+                                                                        <% if (i
+                                                                            <=Math.floor(product.originalData.averageStarRate))
+                                                                            { %>
+                                                                            <i class="bi bi-star-fill"></i>
+                                                                            <% } else if
+                                                                                (i===Math.ceil(product.originalData.averageStarRate)
+                                                                                && product.originalData.averageStarRate
+                                                                                % 1>= 0.5) { %>
+                                                                                <i class="bi bi-star-half"></i>
+                                                                                <% } else { %>
+                                                                                    <i class="bi bi-star"></i>
+                                                                                    <% } %>
+                                                                                        <% } %>
+                                                                </div>
+                                                                <div class="rating-value">
+                                                                    <%= product.originalData.averageStarRate.toFixed(1)
+                                                                        %>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+
+                                                                <div class="action-buttons">
+                                                                    <a href="https:<%= (product.originalData && product.originalData.itemUrl) || '#' %>"
+                                                                        target="_blank"
+                                                                        class="btn btn-primary btn-action">
+                                                                        <i
+                                                                            class="bi bi-box-arrow-up-right me-1"></i>Ürüne
+                                                                        Git
+                                                                    </a>
+                                                                    <button
+                                                                        class="btn btn-favorite btn-action favorite-btn"
+                                                                        data-product-id="<%= product.id %>">
+                                                                        <i class="bi bi-heart me-1"></i>Favori
+                                                                    </button>
+                                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <div class="col-12">
+                                                <div class="no-results-container">
+                                                    <i class="bi bi-search no-results-icon"></i>
+                                                    <h4 class="mb-3">Aradığınız kriterlere uygun ürün bulunamadı</h4>
+                                                    <p class="text-muted">Farklı bir anahtar kelime ile tekrar deneyin
+                                                        veya marka seçimi bölümüne
+                                                        göz atın.</p>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                        </div>
+
+                        <% if (typeof products !=='undefined' && Array.isArray(products) && products.length) { %>
+                            <div class="pagination-container">
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Önceki</a>
+                                        </li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Sonraki</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <!-- Brands Screen -->
+                    <div class="tab-pane fade" id="brands-screen" role="tabpanel">
+                        <div class="section-header">
+                            <h1>Marka Seçimi & Ürünler</h1>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="mb-3">Popüler Markalar</h5>
+                            <div id="brands-list" class="d-flex gap-3 flex-wrap brands-list">
+                                <% const brands=['Nike', 'Adidas' , 'Samsung' , 'Apple' , 'Sony' , 'Xiaomi' , 'HP'
+                                    , 'Lenovo' , 'LG' , 'Philips' ]; brands.forEach(b=> {
+                                    %>
+                                    <button class="btn btn-outline-secondary brand-btn" data-brand="<%= b %>">
+                                        <%= b %>
+                                    </button>
+                                    <% }) %>
+                            </div>
+                        </div>
+
+                        <div id="brand-products" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                            <!-- Brand products will be loaded here -->
+                            <div class="col-12 text-center py-5">
+                                <i class="bi bi-tag fs-1 text-muted mb-3"></i>
+                                <p class="fs-5">Lütfen bir marka seçin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Tab switching
+                    document.getElementById('search-tab').addEventListener('click', function () {
+                        document.getElementById('search-screen').classList.add('show', 'active');
+                        document.getElementById('brands-screen').classList.remove('show', 'active');
+                    });
+
+                    document.getElementById('brands-tab').addEventListener('click', function () {
+                        document.getElementById('brands-screen').classList.add('show', 'active');
+                        document.getElementById('search-screen').classList.remove('show', 'active');
+                    });
+
+                    // Loading overlay
+                    const loadingOverlay = document.getElementById('loading-overlay');
+
+                    // Form submission
+                    document.getElementById('api-form').addEventListener('submit', function (e) {
+                        loadingOverlay.classList.add('active');
+
+                        // Simulate API request
+                        setTimeout(function () {
+                            loadingOverlay.classList.remove('active');
+                        }, 1500);
+                    });
+
+                    // Clear button
+                    document.getElementById('btn-clear').addEventListener('click', function () {
+                        document.querySelector('input[name="keyword"]').value = '';
+                        document.getElementById('result-info').innerHTML = '<i class="bi bi-info-circle me-2"></i>Lütfen arama yapın';
+                        document.getElementById('product-results').innerHTML = `
+          <div class="col-12">
+            <div class="no-results-container">
+              <i class="bi bi-search no-results-icon"></i>
+              <h4 class="mb-3">Arama yapın</h4>
+              <p class="text-muted">Üstteki arama kutusuna ürün adı yazarak arama yapabilirsiniz.</p>
+            </div>
+          </div>
+        `;
+                    });
+
+                    // Favorite button functionality
+                    document.querySelectorAll('.favorite-btn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            this.classList.toggle('active');
+                            if (this.classList.contains('active')) {
+                                this.innerHTML = '<i class="bi bi-heart-fill me-1"></i>Favori';
+                            } else {
+                                this.innerHTML = '<i class="bi bi-heart me-1"></i>Favori';
+                            }
+                        });
+                    });
+
+                    // Brand selection
+                    document.querySelectorAll('.brand-btn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            // Remove active class from all buttons
+                            document.querySelectorAll('.brand-btn').forEach(btn => {
+                                btn.classList.remove('active');
+                            });
+
+                            // Add active class to clicked button
+                            this.classList.add('active');
+
+                            // Show loading
+                            loadingOverlay.classList.add('active');
+
+                            // Simulate loading brand products
+                            setTimeout(function () {
+                                loadingOverlay.classList.remove('active');
+
+                                // Generate brand products
+                                const brandProducts = document.getElementById('brand-products');
+                                brandProducts.innerHTML = '';
+
+                                for (let i = 0; i < 8; i++) {
+                                    brandProducts.innerHTML += `
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-img-container">
+                      <img src="https://via.placeholder.com/300" class="card-img-top" alt="Ürün ${i + 1}">
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Marka Ürünü ${i + 1}</h5>
+                      <p class="card-description">Bu markaya özel ürün açıklaması. Ürünün temel özellikleri ve kısa tanımı.</p>
+                      <div class="price-container">
+                        <span class="current-price">${Math.floor(Math.random() * 900) + 100} TL</span>
+                      </div>
+                      <div class="rating-container">
+                        <div class="rating-stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-half"></i>
+                          <i class="bi bi-star"></i>
+                        </div>
+                        <div class="rating-value">3.5</div>
+                      </div>
+                      <div class="action-buttons">
+                        <a href="#" target="_blank" class="btn btn-primary btn-action">
+                          <i class="bi bi-box-arrow-up-right me-1"></i>Ürüne Git
+                        </a>
+                        <button class="btn btn-favorite btn-action favorite-btn">
+                          <i class="bi bi-heart me-1"></i>Favori
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+                                }
+
+                                // Add event listeners to new favorite buttons
+                                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                                    btn.addEventListener('click', function () {
+                                        this.classList.toggle('active');
+                                        if (this.classList.contains('active')) {
+                                            this.innerHTML = '<i class="bi bi-heart-fill me-1"></i>Favori';
+                                        } else {
+                                            this.innerHTML = '<i class="bi bi-heart me-1"></i>Favori';
+                                        }
+                                    });
+                                });
+                            }, 1000);
+                        });
+                    });
+                });
+            </script>
 </body>
 
 </html>
