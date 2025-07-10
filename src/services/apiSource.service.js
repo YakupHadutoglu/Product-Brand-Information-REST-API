@@ -55,4 +55,39 @@ const load = async () => {
     return cachedSources;
 };
 
-module.exports = { load };
+const loadByType = async (type) => {
+    const docs = await ApiSource.find({ enabled: true, sourceType: type }).lean();
+
+    return docs.map(d => {
+        const isRapidAPI = d.baseURL.includes('rapidapi.com');
+        let rapidAPIHost = '';
+        if (isRapidAPI) {
+            try {
+                rapidAPIHost = new URL(d.baseURL).hostname;
+            } catch (e) {
+                console.error(`Invalid baseURL for RapidAPI source ${d.name}: ${d.baseURL}`, e);
+                return null;
+            }
+        }
+
+        const headers = {
+            ...d.headers,
+            ...(isRapidAPI && {
+                'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+                'X-RapidAPI-Host': rapidAPIHost,
+                'Content-Type': 'application/json',
+            })
+        };
+
+        return {
+            ...d,
+            client: axios.create({
+                baseURL: d.baseURL,
+                headers: headers,
+                timeout: 15000,
+            }),
+        };
+    }).filter(Boolean);
+};
+
+module.exports = { load, loadByType };

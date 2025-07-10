@@ -69,7 +69,7 @@ const ApiSourceSchema = new mongoose.Schema({
     },
     sourceType: {
         type: String,
-        enum: ['amazon', 'tiktok', 'aliexpress', 'other'],
+        enum: ['amazon', 'tiktok', 'aliexpress', 'realTimeProductSearch' , 'other'],
         default: 'other'
     },
     responseMapping: {  // Can be kept as a required setting to process the response
