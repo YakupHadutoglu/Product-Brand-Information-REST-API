@@ -3,6 +3,7 @@ const router = express.Router();
 const upload = require('../middlewares/uploads.js');
 const User = require('../models/User.js');
 const { authenticateUser } = require('../middlewares/authenticate.js');
+const { changePassword } = require('../controllers/user.controller.js');
 
 router.get('/profile', authenticateUser, async (req, res) => {
     try {
@@ -33,5 +34,7 @@ router.post('/profile/post', authenticateUser, upload.single('profileImage'), as
         res.status(500).send('Sunucu hatası.');
     }
 });
+
+router.post('/change-password', authenticateUser, changePassword);
 
 module.exports = router;

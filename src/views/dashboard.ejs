@@ -229,6 +229,10 @@
                             <p><strong>Üyelik Tarihi:</strong>
                               <%= locals.createdAt %>
                             </p>
+                            <p><strong>Şifre Değiştir:</strong>
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#changePasswordModal">Şifreyi Değiştir</button>
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -419,6 +423,40 @@
                   </div>
                 </div>
               </div>
+
+              <!-- ------------------ ŞİFRE DEĞİŞTİRME MODALI ------------------ -->
+              <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered"> <!-- ORTALAMA İÇİN BURASI EKLENDİ -->
+                  <div class="modal-content rounded-3 shadow">
+                    <div class="modal-header bg-warning text-dark">
+                      <h5 class="modal-title" id="changePasswordLabel">Şifreyi Değiştir</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="changePasswordForm" method="POST" action="/change-password">
+                        <div class="mb-3">
+                          <label for="currentPassword" class="form-label">Mevcut Şifre</label>
+                          <input type="password" class="form-control" id="" name="currentPassword"
+                            required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="newPassword" class="form-label">Yeni Şifre</label>
+                          <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="confirmPassword" class="form-label">Yeni Şifre (Tekrar)</label>
+                          <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Şifreyi Güncelle</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
 
               <!-- ------------------ CUSTOM JS ------------------ -->
               <script>
