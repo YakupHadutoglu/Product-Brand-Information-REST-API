@@ -72,7 +72,7 @@
 
                         <div id="product-results" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
                             <% if (typeof products !=='undefined' && Array.isArray(products) && products.length) { %>
-                                <% products.forEach(product=> { %>
+                                <% products.forEach(function(product) { %>
                                     <div class="col">
                                         <div class="card h-100 product-card" data-product-id="<%= product.id %>"
                                             data-product-name="<%= product.name %>"
@@ -80,7 +80,7 @@
                                             data-product-price="<%= typeof product.price !== 'undefined' ? product.price : 'N/A' %>"
                                             data-product-currency="<%= typeof product.currency !== 'undefined' ? product.currency : '' %>"
                                             data-product-image="https:<%= product.imageURL ? product.imageURL : '/images/no-image.jpg' %>"
-                                            data-product-images="<%= JSON.stringify(product.originalData && product.originalData.images && product.originalData.images.length > 0 ? product.originalData.images.map(img => 'https:' + img.url) : ['https:' + (product.imageURL || '/images/no-image.jpg')]) %>"
+                                            data-product-images="<%= JSON.stringify(product.originalData && product.originalData.images && product.originalData.images.length > 0 ? product.originalData.images.map(function(img) { return 'https:' + img.url; }) : ['https:' + (product.imageURL || '/images/no-image.jpg')]) %>"
                                             data-product-url="https:<%= (product.originalData && product.originalData.itemUrl) || '#' %>"
                                             data-product-rating="<%= product.originalData && product.originalData.averageStarRate ? product.originalData.averageStarRate : 0 %>"
                                             data-product-review-count="<%= product.originalData && product.originalData.reviewCount ? product.originalData.reviewCount : 0 %>"
@@ -98,86 +98,72 @@
 
                                                 <% if (product.description) { %>
                                                     <p class="card-description">
-                                                        <%= product.description.substring(0, 120) +
-                                                            (product.description.length> 120 ? '...' : '') %>
+                                                        <%= product.description.substring(0, 120) + (product.description.length > 120 ? '...' : '') %>
                                                     </p>
                                                     <% } %>
 
                                                         <div class="price-container">
                                                             <span class="current-price">
-                                                                <%= typeof product.price !=='undefined' ? product.price
-                                                                    : 'N/A' %>
-                                                                    <%= typeof product.currency !=='undefined' ?
-                                                                        product.currency : '' %>
+                                                                <%= typeof product.price !=='undefined' ? product.price : 'N/A' %>
+                                                                <%= typeof product.currency !=='undefined' ? product.currency : '' %>
                                                             </span>
-                                                            <% if (product.originalData &&
-                                                                product.originalData.promotionPrice &&
-                                                                product.originalData.price) { %>
+                                                            <% if (product.originalData && product.originalData.promotionPrice && product.originalData.price) { %>
                                                                 <span class="original-price">
                                                                     <%= product.originalData.price %>
                                                                 </span>
                                                                 <% } %>
                                                         </div>
 
-                                                        <% if (product.originalData &&
-                                                            product.originalData.averageStarRate) { %>
+                                                        <% if (product.originalData && product.originalData.averageStarRate) { %>
                                                             <div class="rating-container">
                                                                 <div class="rating-stars">
-                                                                    <% for (let i=1; i <=5; i++) { %>
-                                                                        <% if (i
-                                                                            <=Math.floor(product.originalData.averageStarRate))
-                                                                            { %>
+                                                                    <% for (var i=1; i <=5; i++) { %>
+                                                                        <% if (i <= Math.floor(product.originalData.averageStarRate)) { %>
                                                                             <i class="bi bi-star-fill"></i>
-                                                                            <% } else if
-                                                                                (i===Math.ceil(product.originalData.averageStarRate)
-                                                                                && product.originalData.averageStarRate
-                                                                                % 1>= 0.5) { %>
-                                                                                <i class="bi bi-star-half"></i>
-                                                                                <% } else { %>
-                                                                                    <i class="bi bi-star"></i>
-                                                                                    <% } %>
-                                                                                        <% } %>
+                                                                        <% } else if (i === Math.ceil(product.originalData.averageStarRate) && product.originalData.averageStarRate % 1 >= 0.5) { %>
+                                                                            <i class="bi bi-star-half"></i>
+                                                                        <% } else { %>
+                                                                            <i class="bi bi-star"></i>
+                                                                        <% } %>
+                                                                    <% } %>
                                                                 </div>
                                                                 <div class="rating-value">
-                                                                    <%= product.originalData.averageStarRate.toFixed(1)
-                                                                        %>
+                                                                    <%= product.originalData.averageStarRate.toFixed(1) %>
                                                                 </div>
                                                                 <% if (product.originalData.reviewCount) { %>
                                                                     <div class="review-count">
                                                                         (<%= product.originalData.reviewCount %> yorum)
                                                                     </div>
-                                                                    <% } %>
+                                                                <% } %>
                                                             </div>
-                                                            <% } %>
+                                                        <% } %>
 
-                                                                <div class="action-buttons">
-                                                                    <a href="https:<%= (product.originalData && product.originalData.itemUrl) || '#' %>"
-                                                                        target="_blank"
-                                                                        class="btn btn-primary btn-action">
-                                                                        <i
-                                                                            class="bi bi-box-arrow-up-right me-1"></i>Ürüne
-                                                                        Git
-                                                                    </a>
-                                                                    <button
-                                                                        class="btn btn-favorite btn-action favorite-btn"
-                                                                        data-product-id="<%= product.id %>">
-                                                                        <i class="bi bi-heart me-1"></i>Favori
-                                                                    </button>
-                                                                </div>
+                                                        <div class="action-buttons">
+                                                            <a href="https:<%= (product.originalData && product.originalData.itemUrl) || '#' %>"
+                                                                target="_blank"
+                                                                class="btn btn-primary btn-action">
+                                                                <i class="bi bi-box-arrow-up-right me-1"></i>Ürüne Git
+                                                            </a>
+                                                            <button
+                                                                class="btn btn-favorite btn-action favorite-btn"
+                                                                data-product-id="<%= product.id %>">
+                                                                <i class="bi bi-heart me-1"></i>Favori
+                                                            </button>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <% }); %>
-                                        <% } else { %>
-                                            <div class="col-12">
-                                                <div class="no-results-container">
-                                                    <i class="bi bi-search no-results-icon"></i>
-                                                    <h4 class="mb-3">Aradığınız kriterlere uygun ürün bulunamadı</h4>
-                                                    <p class="text-muted">Farklı bir anahtar kelime ile tekrar deneyin
-                                                        veya marka seçimi bölümüne göz atın.</p>
-                                                </div>
-                                            </div>
-                                            <% } %>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="col-12">
+                                    <div class="no-results-container">
+                                        <i class="bi bi-search no-results-icon"></i>
+                                        <h4 class="mb-3">Aradığınız kriterlere uygun ürün bulunamadı</h4>
+                                        <p class="text-muted">Farklı bir anahtar kelime ile tekrar deneyin
+                                            veya marka seçimi bölümüne göz atın.</p>
+                                    </div>
+                                </div>
+                            <% } %>
                         </div>
 
                         <% if (typeof products !=='undefined' && Array.isArray(products) && products.length) { %>
@@ -196,7 +182,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                            <% } %>
+                        <% } %>
                     </div>
 
                     <div class="tab-pane fade" id="brands-screen" role="tabpanel">
@@ -204,8 +190,7 @@
                             <h1>Marka Seçimi ile Ürün Arama</h1>
                             <p class="text-muted">Bir marka adı girerek o markaya ait ürünleri listeleyin.</p>
                         </div>
-                        <form id="brand-form form1" action="/brand-Product/api" name="productSearchForm" method="get"
-                            class="mb-4">
+                        <form id="brand-form" action="/brand-Product/api" name="productSearchForm" method="get" class="mb-4">
                             <input type="hidden" name="activeTab" id="activeTabInput" value="search-screen">
                             <input type="hidden" name="type" value="realTimeProductSearch" />
 
@@ -224,19 +209,17 @@
                         </form>
 
                         <div id="brand-result-info" class="result-info mb-3">
-                            <% if (typeof brandProducts !=='undefined' && Array.isArray(brandProducts) &&
-                                brandProducts.length) { %>
+                            <% if (typeof brandProducts !=='undefined' && Array.isArray(brandProducts) && brandProducts.length) { %>
                                 <i class="bi bi-info-circle me-2"></i>
                                 <%= brandProducts.length %> ürün bulundu
-                                    <% } else { %>
-                                        <i class="bi bi-exclamation-circle me-2"></i>Sonuç bulunamadı
-                                        <% } %>
+                            <% } else { %>
+                                <i class="bi bi-exclamation-circle me-2"></i>Sonuç bulunamadı
+                            <% } %>
                         </div>
 
                         <div id="brand-product-results" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-                            <% if (typeof brandProducts !=='undefined' && Array.isArray(brandProducts) &&
-                                brandProducts.length) { %>
-                                <% brandProducts.forEach(product=> { %>
+                            <% if (typeof brandProducts !=='undefined' && Array.isArray(brandProducts) && brandProducts.length) { %>
+                                <% brandProducts.forEach(function(product) { %>
                                     <div class="col">
                                         <div class="card h-100 product-card" data-product-id="<%= product.id %>"
                                             data-product-name="<%= product.name %>"
@@ -251,19 +234,16 @@
                                             data-product-attributes="<%= product.productAttributes ? JSON.stringify(product.productAttributes) : '{}' %>"
                                             data-product-original-price="<%= product.originalPrice || '' %>">
                                             <div class="card-img-container">
-                                                <% if (product.productPhotos && product.productPhotos.length> 1) { %>
-                                                    <div id="carousel-<%= product.id %>"
-                                                        class="carousel slide product-carousel"
-                                                        data-bs-interval="false">
+                                                <% if (product.productPhotos && product.productPhotos.length > 1) { %>
+                                                    <div id="carousel-<%= product.id %>" class="carousel slide product-carousel" data-bs-interval="false">
                                                         <div class="carousel-inner">
-                                                            <% product.productPhotos.forEach((photo, index)=> { %>
-                                                                <div
-                                                                    class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                                            <% product.productPhotos.forEach(function(photo, index) { %>
+                                                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
                                                                     <img src="<%= photo %>" class="d-block w-100"
                                                                         alt="<%= product.name %> - Görsel <%= index + 1 %>"
                                                                         onerror="this.src='/images/no-image.jpg'">
                                                                 </div>
-                                                                <% }); %>
+                                                            <% }); %>
                                                         </div>
                                                         <button class="carousel-control-prev" type="button"
                                                             data-bs-target="#carousel-<%= product.id %>"
@@ -280,11 +260,11 @@
                                                             <span class="visually-hidden">Sonraki</span>
                                                         </button>
                                                     </div>
-                                                    <% } else { %>
-                                                        <img src="<%= (product.productPhotos && product.productPhotos.length > 0) ? product.productPhotos[0] : '/images/no-image.jpg' %>"
-                                                            class="card-img-top" alt="<%= product.name %>"
-                                                            onerror="this.src='/images/no-image.jpg'">
-                                                        <% } %>
+                                                <% } else { %>
+                                                    <img src="<%= (product.productPhotos && product.productPhotos.length > 0) ? product.productPhotos[0] : '/images/no-image.jpg' %>"
+                                                        class="card-img-top" alt="<%= product.name %>"
+                                                        onerror="this.src='/images/no-image.jpg'">
+                                                <% } %>
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">
@@ -293,114 +273,89 @@
 
                                                 <% if (product.description) { %>
                                                     <p class="card-description">
-                                                        <%= product.description.substring(0, 120) +
-                                                            (product.description.length> 120 ? '...' : '') %>
+                                                        <%= product.description.substring(0, 120) + (product.description.length > 120 ? '...' : '') %>
                                                     </p>
+                                                <% } %>
+
+                                                <div class="price-container">
+                                                    <span class="current-price">
+                                                        <%= typeof product.price !=='undefined' ? product.price : 'N/A' %>
+                                                        <%= typeof product.currency !=='undefined' ? product.currency : '' %>
+                                                    </span>
+                                                    <% if (product.originalPrice) { %>
+                                                        <span class="original-price">
+                                                            <%= product.originalPrice %>
+                                                        </span>
                                                     <% } %>
+                                                </div>
 
-                                                        <div class="price-container">
-                                                            <span class="current-price">
-                                                                <%= typeof product.price !=='undefined' ? product.price
-                                                                    : 'N/A' %>
-                                                                    <%= typeof product.currency !=='undefined' ?
-                                                                        product.currency : '' %>
-                                                            </span>
-                                                            <% if (product.originalPrice) { %>
-                                                                <span class="original-price">
-                                                                    <%= product.originalPrice %>
-                                                                </span>
+                                                <% if (product.rating || product.reviewCount) { %>
+                                                    <div class="rating-container">
+                                                        <% if (product.rating) { %>
+                                                            <div class="rating-stars">
+                                                                <% for (var i=1; i <=5; i++) { %>
+                                                                    <% if (i <= Math.floor(product.rating)) { %>
+                                                                        <i class="bi bi-star-fill"></i>
+                                                                    <% } else if (i === Math.ceil(product.rating) && product.rating % 1 >= 0.5) { %>
+                                                                        <i class="bi bi-star-half"></i>
+                                                                    <% } else { %>
+                                                                        <i class="bi bi-star"></i>
+                                                                    <% } %>
                                                                 <% } %>
-                                                        </div>
-
-                                                        <% if (product.rating || product.reviewCount) { %>
-                                                            <div class="rating-container">
-                                                                <% if (product.rating) { %>
-                                                                    <div class="rating-stars">
-                                                                        <% for (let i=1; i <=5; i++) { %>
-                                                                            <% if (i <=Math.floor(product.rating)) { %>
-                                                                                <i class="bi bi-star-fill"></i>
-                                                                                <% } else if
-                                                                                    (i===Math.ceil(product.rating) &&
-                                                                                    product.rating % 1>= 0.5) { %>
-                                                                                    <i class="bi bi-star-half"></i>
-                                                                                    <% } else { %>
-                                                                                        <i class="bi bi-star"></i>
-                                                                                        <% } %>
-                                                                                            <% } %>
-                                                                    </div>
-                                                                    <div class="rating-value">
-                                                                        <%= product.rating.toFixed(1) %>
-                                                                    </div>
-                                                                    <% } %>
-                                                                        <% if (product.reviewCount) { %>
-                                                                            <div class="review-count">
-                                                                                (<%= product.reviewCount %> yorum)
-                                                                            </div>
-                                                                            <% } %>
                                                             </div>
-                                                            <% } %>
+                                                            <div class="rating-value">
+                                                                <%= product.rating.toFixed(1) %>
+                                                            </div>
+                                                        <% } %>
+                                                        <% if (product.reviewCount) { %>
+                                                            <div class="review-count">
+                                                                (<%= product.reviewCount %> yorum)
+                                                            </div>
+                                                        <% } %>
+                                                    </div>
+                                                <% } %>
 
-                                                                <div class="action-buttons">
-                                                                    <a href="<%= product.offerURL || product.productPageURL || '#' %>"
-                                                                        target="_blank"
-                                                                        class="btn btn-primary btn-action">
-                                                                        <i
-                                                                            class="bi bi-box-arrow-up-right me-1"></i>Ürüne
-                                                                        Git
-                                                                    </a>
-                                                                    <button
-                                                                        class="btn btn-favorite btn-action favorite-btn"
-                                                                        data-product-id="<%= product.id %>">
-                                                                        <i class="bi bi-heart me-1"></i>Favori
-                                                                    </button>
-                                                                </div>
+                                                <div class="action-buttons">
+                                                    <a href="<%= product.offerURL || product.productPageURL || '#' %>"
+                                                        target="_blank"
+                                                        class="btn btn-primary btn-action">
+                                                        <i class="bi bi-box-arrow-up-right me-1"></i>Ürüne Git
+                                                    </a>
+                                                    <button
+                                                        class="btn btn-favorite btn-action favorite-btn"
+                                                        data-product-id="<%= product.id %>">
+                                                        <i class="bi bi-heart me-1"></i>Favori
+                                                    </button>
+                                                </div>
 
-                                                                <% if (product.productAttributes &&
-                                                                    Object.keys(product.productAttributes).length> 0) {
-                                                                    %>
-                                                                    <hr>
-                                                                    <h6 class="card-subtitle mb-2 text-muted">
-                                                                        Özellikler:</h6>
-                                                                    <ul class="list-unstyled product-attributes-list">
-                                                                        <% const
-                                                                            attributeKeys=Object.keys(product.productAttributes);
-                                                                            %>
-                                                                            <% const displayLimit=3; // Gösterilecek
-                                                                                özellik sayısı %>
-                                                                                <% for (let i=0; i <
-                                                                                    Math.min(attributeKeys.length,
-                                                                                    displayLimit); i++) { %>
-                                                                                    <% const key=attributeKeys[i]; %>
-                                                                                        <li><strong>
-                                                                                                <%= key %>:
-                                                                                            </strong>
-                                                                                            <%= product.productAttributes[key]
-                                                                                                %>
-                                                                                        </li>
-                                                                                        <% } %>
-                                                                                            <% if (attributeKeys.length>
-                                                                                                displayLimit) { %>
-                                                                                                <li><small><a href="#"
-                                                                                                            class="show-product-details text-primary"
-                                                                                                            data-product-id="<%= product.id %>">Daha
-                                                                                                            fazla...</a></small>
-                                                                                                </li>
-                                                                                                <% } %>
-                                                                    </ul>
-                                                                    <% } %>
+                                                <% if (product.productAttributes && Object.keys(product.productAttributes).length > 0) { %>
+                                                    <hr>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Özellikler:</h6>
+                                                    <ul class="list-unstyled product-attributes-list">
+                                                        <% var attributeKeys = Object.keys(product.productAttributes); %>
+                                                        <% var displayLimit = 3; // Gösterilecek özellik sayısı %>
+                                                        <% for (var i=0; i < Math.min(attributeKeys.length, displayLimit); i++) { %>
+                                                            <% var key = attributeKeys[i]; %>
+                                                            <li><strong><%= key %>:</strong> <%= product.productAttributes[key] %></li>
+                                                        <% } %>
+                                                        <% if (attributeKeys.length > displayLimit) { %>
+                                                            <li><small><a href="#" class="show-product-details text-primary" data-product-id="<%= product.id %>">Daha fazla...</a></small></li>
+                                                        <% } %>
+                                                    </ul>
+                                                <% } %>
                                             </div>
                                         </div>
                                     </div>
-                                    <% }); %>
-                                        <% } else { %>
-                                            <div class="col-12">
-                                                <div class="no-results-container">
-                                                    <i class="bi bi-search no-results-icon"></i>
-                                                    <h4 class="mb-3">Bu markaya ait ürün bulunamadı</h4>
-                                                    <p class="text-muted">Farklı bir marka ismiyle tekrar deneyin.</p>
-                                                </div>
-                                            </div>
-                                            <% } %>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="col-12">
+                                    <div class="no-results-container">
+                                        <i class="bi bi-search no-results-icon"></i>
+                                        <h4 class="mb-3">Bu markaya ait ürün bulunamadı</h4>
+                                        <p class="text-muted">Farklı bir marka ismiyle tekrar deneyin.</p>
+                                    </div>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                 </div>
