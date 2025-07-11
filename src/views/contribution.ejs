@@ -29,10 +29,10 @@
                         <button data-tab="donation">Bağış</button>
                     </div>
                     <!-- Ürün/Marka -->
-                    <form id="form-product" class="contrib-form active" data-aos="fade-right">
+                    <form id="form-product" action="/contribution-brand-product" method="POST" class="contrib-form active" data-aos="fade-right">
                         <div class="form-group">
                             <label>Marka</label>
-                            <input list="brands" placeholder="Mevcut seçin veya yeni ekleyin...">
+                            <input list="brands" name="brandName" placeholder="Mevcut seçin veya yeni ekleyin...">
                             <datalist id="brands">
                                 <option>Brand A</option>
                                 <option>Brand B</option>
@@ -41,23 +41,23 @@
                         </div>
                         <div class="form-group">
                             <label>Ürün</label>
-                            <input type="text" placeholder="Ürün adı...">
+                            <input type="text" name="productName" placeholder="Ürün adı...">
                         </div>
                         <div class="form-group">
                             <label>Detaylı Açıklama</label>
-                            <textarea placeholder="Ürünün tüm özellikleri..."></textarea>
+                            <textarea name="productDescription" placeholder="Ürünün tüm özellikleri..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
                     </form>
                     <!-- Yeni Fikir -->
-                    <form id="form-idea" class="contrib-form" data-aos="fade-right">
+                    <form id="form-idea" method="POST" class="contrib-form"action="/contribution-new-idea" data-aos="fade-right">
                         <div class="form-group">
                             <label>Fikir Başlığı</label>
-                            <input type="text" placeholder="Başlık...">
+                            <input type="text" name="ideaTitle" placeholder="Başlık...">
                         </div>
                         <div class="form-group">
                             <label>Detaylar</label>
-                            <textarea placeholder="Fikrin detaylarını yazın..."></textarea>
+                            <textarea name="ideaDetails" placeholder="Fikrin detaylarını yazın..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
                     </form>
