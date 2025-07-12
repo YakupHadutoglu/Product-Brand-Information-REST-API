@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+const { contributionGet } = require('../services/contributionAGet.service.js');
+
 const getHomPage = async (req , res) => {
     const user = req.user;
     res.render('index' , {
@@ -21,18 +23,20 @@ const getRegisterPage = (req , res) => {
     });
 }
 
-const getDashboardPage = (req , res) => {
+const getDashboardPage = async (req , res) => {
     const token = req.cookies.token;
-    const payload = jwt.verify(token , process.env.JWT_SECRET)
-    console.log(payload);
-    console.log(payload.approvedStatus);
-    console.log(payload.idAdmin);
-    console.log(req.user.approvedStatus)
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    // const { brand, idea, api, mail } = await contributionGet();
 
     res.render('dashboard' , {
         page_name: 'dashboard',
         payload: payload,
         user: req.user,
+        // brand,
+        // idea,
+        // api,
+        // mail
     });
 }
 
