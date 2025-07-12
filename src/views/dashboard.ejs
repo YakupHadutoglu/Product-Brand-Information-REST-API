@@ -115,55 +115,7 @@
 
           <!-- ------------------ ADMIN DASHBOARD ------------------ -->
           <% if (idAdmin) { %>
-            <div class="container-fluid">
-              <div class="row">
-                <!-- Sidebar -->
-                <nav class="col-md-2 d-none d-md-block sidebar p-3">
-                  <h4 class="mb-4">Dashboard</h4>
-                  <a href="#"><i class="bi bi-speedometer2"></i> Ana Sayfa</a>
-                  <a href="#"><i class="bi bi-box"></i> Ürünler</a>
-                  <a href="#"><i class="bi bi-cloud"></i> API Servisleri</a>
-                  <a href="#"><i class="bi bi-gear"></i> Ayarlar</a>
-                  <a href="#"><i class="bi bi-door-closed"></i> Çıkış</a>
-                </nav>
 
-                <!-- Main -->
-                <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-                  <h2>Hoş Geldiniz!</h2>
-                  <p class="lead">Genel panel görünümünüz</p>
-
-                  <div class="row">
-                    <div class="col-md-4 mb-3">
-                      <div class="card p-3 text-center">
-                        <h5>Toplam Ürün</h5>
-                        <p class="display-6">125</p>
-                      </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                      <div class="card p-3 text-center">
-                        <h5>API Servisleri</h5>
-                        <p class="display-6">18</p>
-                      </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                      <div class="card p-3 text-center">
-                        <h5>Aktif Kullanıcı</h5>
-                        <p class="display-6">47</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card mt-4">
-                    <div class="card-header">
-                      <i class="bi bi-graph-up"></i> Son Etkileşimler
-                    </div>
-                    <div class="card-body">
-                      <p>Grafik veya istatistik yerleşimi buraya eklenecek.</p>
-                    </div>
-                  </div>
-                </main>
-              </div>
-            </div>
             <% } %>
 
               <!-- ------------------ KULLANICI PROFİL & TABLAR ------------------ -->
@@ -202,13 +154,13 @@
                       <a href="#profil" class="list-group-item list-group-item-action active"
                         data-bs-toggle="pill">Profil</a>
                       <a href="#katkilar" class="list-group-item list-group-item-action"
-                        data-bs-toggle="pill">Katkılar</a>
+                        data-bs-toggle="pill">Gönderilen Mailler</a>
                       <a href="#apikey" class="list-group-item list-group-item-action" data-bs-toggle="pill">API
-                        Anahtarı</a>
+                        Servisi Katkıları</a>
                       <a href="#bagislar" class="list-group-item list-group-item-action"
-                        data-bs-toggle="pill">Bağışlar</a>
+                        data-bs-toggle="pill">Marka Ürün Katkıları
                       <a href="#yenifikir" class="list-group-item list-group-item-action" data-bs-toggle="pill">Yeni
-                        Fikir</a>
+                        Fikir Katkıları</a>
                     </div>
                   </div>
 
@@ -239,76 +191,25 @@
 
                       <!-- ------------------ Katkılar ------------------ -->
                       <div class="tab-pane fade" id="katkilar">
-                        <div class="card mb-3">
-                          <div class="card-header">Yeni Ürün / Marka Katkıları</div>
-                          <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                              <li class="list-group-item">
-                                <strong>Ürün:</strong> Akıllı Saat X100<br>
-                                <small class="text-muted">Eklenme Tarihi: 15 Mayıs 2025</small>
-                              </li>
-                              <li class="list-group-item">
-                                <strong>Marka:</strong> Teknoloji Dünyası<br>
-                                <small class="text-muted">Eklenme Tarihi: 10 Mayıs 2025</small>
-                              </li>
-                              <li class="list-group-item">
-                                <strong>Ürün:</strong> Kablosuz Kulaklık Z500<br>
-                                <small class="text-muted">Eklenme Tarihi: 8 Mayıs 2025</small>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
 
                         <div class="card">
-                          <div class="card-header">API Servisi Katkıları</div>
-                          <div class="card-body">
-                            <table class="table table-sm table-hover">
-                              <thead>
-                                <tr>
-                                  <th>Servis Adı</th>
-                                  <th>Kullanım</th>
-                                  <th>Son Güncelleme</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>Hava Durumu API</td>
-                                  <td>1200 istek</td>
-                                  <td>12 Mayıs 2025</td>
-                                </tr>
-                                <tr>
-                                  <td>Harita API</td>
-                                  <td>850 istek</td>
-                                  <td>10 Mayıs 2025</td>
-                                </tr>
-                                <tr>
-                                  <td>Ödeme API</td>
-                                  <td>450 istek</td>
-                                  <td>8 Mayıs 2025</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                          <div class="card-header">Gönderilen Mailler</div>
+                          <% if(idAdmin) { %>
+                            
+                            <% } %>
                         </div>
                       </div>
 
                       <!-- ------------------ API Key ------------------ -->
                       <div class="tab-pane fade" id="apikey">
                         <div class="card">
-                          <div class="card-header">API Anahtarları</div>
+                          <div class="card-header">APİ Servisi Katkıları</div>
                           <div class="card-body">
                             <p>Aktif API Anahtarlarınız:</p>
-                            <ul class="list-group">
-                              <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Key-1234-ABCD-5678</span>
-                                <button class="btn btn-sm btn-outline-danger">İptal Et</button>
-                              </li>
-                              <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Key-9876-ZYXW-4321</span>
-                                <button class="btn btn-sm btn-outline-danger">İptal Et</button>
-                              </li>
-                            </ul>
-                            <button class="btn btn-primary mt-3">Yeni Anahtar Oluştur</button>
+
+                            <% if(idAdmin) { %>
+
+                            <% } %>
                           </div>
                         </div>
                       </div>
@@ -316,36 +217,10 @@
                       <!-- ------------------ Bağışlar ------------------ -->
                       <div class="tab-pane fade" id="bagislar">
                         <div class="card">
-                          <div class="card-header">Yapılan Bağışlar</div>
-                          <div class="card-body">
-                            <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>Tarih</th>
-                                  <th>Miktar (₺)</th>
-                                  <th>Ödeme Yöntemi</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>12 Mayıs 2025</td>
-                                  <td>100</td>
-                                  <td>Kredi Kartı</td>
-                                </tr>
-                                <tr>
-                                  <td>7 Mayıs 2025</td>
-                                  <td>50</td>
-                                  <td>Banka Havalesi</td>
-                                </tr>
-                                <tr>
-                                  <td>1 Mayıs 2025</td>
-                                  <td>75</td>
-                                  <td>PayPal</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <button class="btn btn-success mt-3">Yeni Bağış Yap</button>
-                          </div>
+                          <div class="card-header">Marka Ürün</div>
+                          <% if(idAdmin) { %>
+
+                            <% } %>
                         </div>
                       </div>
 
@@ -354,27 +229,9 @@
                         <div class="card">
                           <div class="card-header">Yeni Fikir Önerileri</div>
                           <div class="card-body">
-                            <form>
-                              <div class="mb-3">
-                                <label for="fikirBaslik" class="form-label">Fikir Başlığı</label>
-                                <input type="text" class="form-control" id="fikirBaslik"
-                                  placeholder="Fikrinizin başlığını yazın" />
-                              </div>
-                              <div class="mb-3">
-                                <label for="fikirAciklama" class="form-label">Fikir Açıklaması</label>
-                                <textarea class="form-control" id="fikirAciklama" rows="4"
-                                  placeholder="Fikrinizin detaylarını yazın"></textarea>
-                              </div>
-                              <button type="submit" class="btn btn-primary">Gönder</button>
-                            </form>
-                            <hr />
-                            <h6>Önceki Öneriler</h6>
-                            <ul class="list-group">
-                              <li class="list-group-item">Kullanıcı arayüzünü daha sade yapalım.</li>
-                              <li class="list-group-item">Mobil uygulama versiyonu çıkaralım.</li>
-                              <li class="list-group-item">Yeni API servisleri ekleyelim.</li>
-                            </ul>
-                          </div>
+                            <% if(idAdmin) { %>
+
+                            <% } %>
                         </div>
                       </div>
                     </div><!-- /.tab-content -->
