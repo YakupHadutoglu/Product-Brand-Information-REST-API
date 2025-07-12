@@ -25,3 +25,66 @@ document.getElementById('form-donation').addEventListener('submit', e => {
     }
 });
 
+
+// JSON validate function
+function validateJSON(fieldId) {
+    const textarea = document.getElementById(fieldId);
+    const errorElement = document.getElementById(`${fieldId}-error`);
+
+    try {
+        if (!textarea.value.trim()) {
+            throw new Error('This field cannot be left blank');
+        }
+
+        // JSON parse
+        JSON.parse(textarea.value);
+
+        // Doğrulama success
+        textarea.classList.remove('is-invalid');
+        textarea.classList.add('is-valid');
+        errorElement.classList.add('d-none');
+        errorElement.textContent = '';
+
+        return true;
+    } catch (error) {
+        // vertification unsuccessful
+        textarea.classList.remove('is-valid');
+        textarea.classList.add('is-invalid');
+        errorElement.classList.remove('d-none');
+        errorElement.textContent = `Geçersiz JSON formatı: ${error.message}`;
+
+        return false;
+    }
+}
+
+// Validate all JSON fields before form submission
+document.querySelector('form').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    const jsonFields = ['headers', 'paramMap'];
+    jsonFields.forEach(field => {
+        if (!validateJSON(field)) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        e.preventDefault();
+        alert('Please fill in all JSON fields in the correct format.');
+    }
+});
+
+function validatePathStart(input) {
+    const errorDiv = document.getElementById('path-error');
+    if (!input.value.startsWith('/')) {
+        errorDiv.classList.remove('d-none');
+    } else {
+        errorDiv.classList.add('d-none');
+    }
+}
+
+function showToast(type, title, message) {
+    console.log(`${type}: ${title} - ${message}`);
+}
+
+
