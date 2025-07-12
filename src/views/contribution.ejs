@@ -29,7 +29,8 @@
                         <button data-tab="donation">Bağış</button>
                     </div>
                     <!-- Ürün/Marka -->
-                    <form id="form-product" action="/contribution-brand-product" method="POST" class="contrib-form active" data-aos="fade-right">
+                    <form id="form-product" action="/contribution-brand-product" method="POST"
+                        class="contrib-form active" data-aos="fade-right">
                         <div class="form-group">
                             <label>Marka</label>
                             <input list="brands" name="brandName" placeholder="Mevcut seçin veya yeni ekleyin...">
@@ -50,7 +51,8 @@
                         <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
                     </form>
                     <!-- Yeni Fikir -->
-                    <form id="form-idea" method="POST" class="contrib-form"action="/contribution-new-idea" data-aos="fade-right">
+                    <form id="form-idea" method="POST" class="contrib-form" action="/contribution-new-idea"
+                        data-aos="fade-right">
                         <div class="form-group">
                             <label>Fikir Başlığı</label>
                             <input type="text" name="ideaTitle" placeholder="Başlık...">
@@ -62,26 +64,194 @@
                         <button type="submit" class="btn btn-primary btn-submit">Gönder</button>
                     </form>
                     <!-- API Servis -->
-                    <form id="form-service" class="contrib-form" data-aos="fade-right">
-                        <div class="form-group"><label>Servis Adı</label><input type="text" placeholder="Servis adı...">
+                    <form method="POST" id="form-service" action="/contribution-api-service"
+                        class="container mt-5 p-4 bg-white rounded-3 contrib-form" data-aos="fade-right""
+                        style=" max-width: 700px;">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-plug-fill text-primary" style="font-size: 2.5rem;"></i>
+                            <h3 class="mt-2 text-gradient">Yeni API Entegrasyonu Katkısı</h3>
+                            <p class="text-muted">API bilgilerini eksiksiz doldurarak sisteme katkıda bulunabilirsiniz
+                            </p>
                         </div>
-                        <div class="form-group"><label>Base URL</label><input type="url"
-                                placeholder="https://api.example.com"></div>
-                        <div class="form-group"><label>Authentication</label><select>
-                                <option>API Key</option>
-                                <option>OAuth2</option>
-                                <option>JWT</option>
-                            </select></div>
-                        <div class="form-group"><label>Versiyon</label><input type="text" placeholder="v1, v2..."></div>
-                        <div class="form-group"><label>Rate Limit (istek/s)</label><input type="number"
-                                placeholder="100"></div>
-                        <div class="form-group"><label>Dokümantasyon URL</label><input type="url"
-                                placeholder="https://docs.example.com"></div>
-                        <button type="button" id="generate-key" class="btn btn-primary btn-submit">API Key
-                            Oluştur</button>
-                        <div id="apikey-display" style="display:none;"></div>
-                        <button type="submit" class="btn btn-secondary btn-submit mt-3">Servisi Kaydet</button>
+
+                        <div class="mb-4">
+                            <label for="name" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-tag-fill me-2 text-primary"></i>API Adı
+                            </label>
+                            <input type="text" id="name" name="name" class="form-control form-control-lg border-2"
+                                placeholder="Örn: AliExpress API Entegrasyonu" required autocomplete="off"
+                                maxlength="100">
+                            <div class="form-text text-muted ps-4">
+                                <i class="bi bi-info-circle me-1"></i>API'nin kolay tanımlanabilmesi için anlamlı bir
+                                isim verin (maksimum 100 karakter).
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <label for="method" class="form-label fw-semibold text-dark">
+                                        <i class="bi bi-lightning-charge-fill me-2 text-primary"></i>HTTP Metodu
+                                    </label>
+                                    <select id="method" name="method" class="form-select form-select-lg border-2"
+                                        required>
+                                        <option value="" disabled selected>Metod Seçiniz</option>
+                                        <option value="GET" class="text-success">GET</option>
+                                        <option value="POST" class="text-primary">POST</option>
+                                        <option value="PUT" class="text-warning">PUT</option>
+                                        <option value="DELETE" class="text-danger">DELETE</option>
+                                        <option value="PATCH" class="text-info">PATCH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <label for="sourceType" class="form-label fw-semibold text-dark">
+                                        <i class="bi bi-shop me-2 text-primary"></i>Kaynak Tipi
+                                    </label>
+                                    <select id="sourceType" name="sourceType"
+                                        class="form-select form-select-lg border-2" required>
+                                        <option value="other" selected>Diğer</option>
+                                        <option value="amazon">Amazon</option>
+                                        <option value="tiktok">TikTok</option>
+                                        <option value="aliexpress">AliExpress</option>
+                                        <option value="realTimeProductSearch">Real-Time Product Search</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <label for="enabled" class="form-label fw-semibold text-dark">
+                                        <i class="bi bi-power me-2 text-primary"></i>Durum
+                                    </label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="enabled" name="enabled"
+                                            checked style="width: 3em; height: 1.5em;">
+                                        <label class="form-check-label fw-semibold" for="enabled">Aktif</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="baseURL" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-link-45deg me-2 text-primary"></i>Base URL
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-globe"></i></span>
+                                <input type="url" id="baseURL" name="baseURL"
+                                    class="form-control form-control-lg border-start-0 border-2"
+                                    placeholder="https://api.example.com/v1" required autocomplete="off"
+                                    pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+                            </div>
+                            <div class="form-text text-muted ps-4">
+                                <i class="bi bi-info-circle me-1"></i>Geçerli bir HTTP/HTTPS URL adresi girin (Örn:
+                                https://api.example.com).
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="path" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-signpost-2-fill me-2 text-primary"></i>Endpoint Yolu
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">/</span>
+                                <input type="text" id="path" name="path"
+                                    class="form-control form-control-lg border-start-0 border-2"
+                                    placeholder="products/search?query={param}" required autocomplete="off"
+                                    oninput="validatePathStart(this)">
+                            </div>
+                            <div class="form-text text-muted ps-4">
+                                <i class="bi bi-info-circle me-1"></i>Base URL'den sonraki istek yolu ve parametreler
+                                ("/" ile başlamalıdır).
+                            </div>
+                            <div id="path-error" class="alert alert-danger mt-2 d-none" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>Endpoint yolu "/" karakteri ile
+                                başlamalıdır.
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="headers" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-file-earmark-code-fill me-2 text-primary"></i>Headers (JSON format)
+                            </label>
+                            <textarea id="headers" name="headers" class="form-control font-monospace border-2" rows="6"
+                                placeholder='{
+  "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+  "X-RapidAPI-Host": "real-time-amazon-data.p.rapidapi.com"
+}' required></textarea>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="form-text text-muted ps-2">
+                                    <i class="bi bi-info-circle me-1"></i>API anahtarları ve header bilgileri (geçerli
+                                    JSON formatında olmalıdır).
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill"
+                                    onclick="validateJSON('headers')">
+                                    <i class="bi bi-check-circle me-1"></i>JSON Doğrula
+                                </button>
+                            </div>
+                            <div id="headers-error" class="alert alert-danger mt-2 d-none" role="alert"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="paramMap" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-diagram-2-fill me-2 text-primary"></i>Parametre Eşleme (JSON format)
+                            </label>
+                            <textarea id="paramMap" name="paramMap" class="form-control font-monospace border-2"
+                                rows="6" placeholder='{
+  "influencer_adi": "influencer_name",
+  "ulke": "country"
+}' required></textarea>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="form-text text-muted ps-2">
+                                    <i class="bi bi-info-circle me-1"></i>Kullanıcı parametrelerinin API parametrelerine
+                                    eşlemesi (geçerli JSON formatında olmalıdır).
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill"
+                                    onclick="validateJSON('paramMap')">
+                                    <i class="bi bi-check-circle me-1"></i>JSON Doğrula
+                                </button>
+                            </div>
+                            <div id="paramMap-error" class="alert alert-danger mt-2 d-none" role="alert"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="responseMapping" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-shuffle me-2 text-primary"></i>Yanıt Eşleme (JSON format)
+                            </label>
+                            <textarea id="responseMapping" name="responseMapping"
+                                class="form-control font-monospace border-2" rows="6" placeholder='{
+  "profile_name": "data.profile.name",
+  "profile_link": "data.profile.link"
+}'></textarea>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="form-text text-muted ps-2">
+                                    <i class="bi bi-info-circle me-1"></i>API yanıtını uygulamanızın veri yapısına
+                                    dönüştürme kuralları (geçerli JSON olmalıdır).
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill"
+                                    onclick="validateJSON('responseMapping')">
+                                    <i class="bi bi-check-circle me-1"></i>JSON Doğrula
+                                </button>
+                            </div>
+
+                            <label for="responseMapping" id="apiKey" name="apiKey" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-shuffle me-2 text-primary"></i>Api Key
+                            </label>
+                              <input type="text" id="apiKey" name="apiKey"
+                                    class="form-control form-control-lg border-start-0 border-2"
+                                    placeholder="10f3f48sertg3535gs68rgh4d2a35f4sr3g23be033224b5c" required autocomplete="off">
+                            <div id="responseMapping-error" class="alert alert-danger mt-2 d-none" role="alert"></div>
+                        </div>
+
+
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill py-3 fw-bold shadow-sm">
+                                <i class="bi bi-save-fill me-2"></i>API Entegrasyonu Katkısında Bulun
+                            </button>
+                        </div>
                     </form>
+
                     <!-- Bağış -->
                     <form id="form-donation" class="contrib-form" data-aos="fade-right">
                         <div class="form-group"><label>Bağış Tutarı (TL)</label><input type="number"
