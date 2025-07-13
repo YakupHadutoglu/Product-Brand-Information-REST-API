@@ -40,6 +40,10 @@ app.set('views' , path.join(__dirname , 'views'));
 connectDB();
 
 // Routes
-app.use('/' , router)
+app.use('/', router)
+app.use((req, res, next) => {
+  res.status(404).render('404', { page_name: '404' });
+});
+
 
 module.exports = app;
