@@ -1,5 +1,9 @@
 # Product & Brand Information REST API
 
+I've developed a REST API with a modular service architecture. It's frontend-agnostic, using EJS only for a temporary testing interface. The API focuses on data normalization and is built with a flexible approach that extends beyond the classical monolithic understanding.
+
+From the outset, I've established an infrastructure capable of integrating with advanced systems like Redis, RabbitMQ, and web crawlers. Each component is designed with the flexibility to be refactored into its own microservice if needed.
+
 This project is a comprehensive REST API and web interface, distinguished by its multi-source product aggregation capability. It dynamically collects product data from various API sources like AliExpress and Realtime Product Search. Thanks to its flexible API integration architecture, new and different API services can be easily integrated; administrators can expand the system by adding new API sources to the database. Additionally, a dedicated interface for API integration management is provided. With a user-friendly approach, search results are displayed using modern and responsive product cards, offering brand-based search for filtering, and ensuring tab persistence in the product search interface.
 
 Users can register, log in, change their passwords, submit product and brand suggestions, propose new ideas, and even share their own API integrations. Administrator users can oversee all these contributions and manage the API sources.
