@@ -138,7 +138,7 @@ Follow these steps to set up and run the project on your local machine:
 
     - **Error Handling:** Includes comprehensive error catching and logging mechanisms for each API call, simplifying the diagnosis of integration issues.
 
-    - **Data Normalization (normalize):** Transforms raw and varied product data structures from different APIs (e.g., AliExpress, Realtime Product Search) into a single, consistent format usable by the application. This ensures the frontend doesn't need to handle disparate API responses. For example, it follows the result.resultList.item path for AliExpress, while processing paths like organic_results.organic_products or data.products for Realtime Product Search. When a new API is added, only its specific normalization logic needs to be integrated into this function.
+    - **Data Normalization (normalize):** Transforms raw and varied product data structures from different APIs (e.g., AliExpress, Realtime Product Search) into a single, consistent format usable by the application. This ensures the frontend doesn't need to handle disparate API responses. For example,  it follows the result.resultList.item path for AliExpress, while processing paths like organic_results.organic_products or data.products for Realtime Product Search. When a new API is added, only its specific normalization logic needs to be integrated into this function.
 
 
 ## Other Technical Enhancements
