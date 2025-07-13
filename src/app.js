@@ -8,6 +8,7 @@ const ejs = require('ejs')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+const flash = require('connect-flash');
 const authRoutes = require('./routers/auth.routes.js');
 
 const app = express();
@@ -16,6 +17,7 @@ const connectDB = require('./config/db.js');
 require('./config/passport');
 const router = require('./routers/index.js');
 const { localsİnformation } = require('./middlewares/localsInformation.js');
+const { flashMessages } = require('./middlewares/flashMessages.js');
 
 // Middleware
 app.use(express.json());
@@ -28,6 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use(flash());
+app.use(flashMessages);
 
 app.set("view engine" , "ejs");
 app.set('views' , path.join(__dirname , 'views'));

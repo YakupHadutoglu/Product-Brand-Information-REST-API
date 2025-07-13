@@ -20,6 +20,19 @@
                         <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+                          <% if (flashMessages.success && flashMessages.success.length> 0) { %>
+                            <div class="alert alert-success">
+                              <%= flashMessages.success[0] %>
+                            </div>
+                            <% } %>
+
+                              <% if (flashMessages.error && flashMessages.error.length> 0) { %>
+                                <div class="alert alert-danger">
+                                  <%= flashMessages.error[0] %>
+                                </div>
+                                <% } %>
+
                 </form>
             </div>
 

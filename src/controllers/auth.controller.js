@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
         });
 
         console.log('kişi başarıyla oluşturuldu');
-
+        req.flash('success', 'User created successfully');
         return res.redirect('/dashboard');
 
     } catch (error) {
@@ -77,6 +77,7 @@ const loginUser = async (req, res) => {
         });
 
         req.session.user = user;
+        req.flash('success', 'Logged in successfully');
         res.redirect('/dashboard');
 
         console.log('kişi başarıyla giriş yaptı');
@@ -94,6 +95,7 @@ const logOutUser = async (req, res) => {
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
         });
+        req.flash('success', 'Logged out successfully');
         res.redirect('/login');
 
             console.log(req.cookies)

@@ -11,6 +11,7 @@ const contactController = async (req , res) => {
             message: message
         });
         console.log('Email sent successfully');
+        req.flash('success', 'Email sent successfully');
         res.status(201).redirect('/contact');
     } catch (error) {
         console.error(error);
