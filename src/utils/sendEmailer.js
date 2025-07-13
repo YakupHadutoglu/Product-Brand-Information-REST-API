@@ -39,7 +39,7 @@ const sendEmailLogic = async ({ name, email, subject, message }) => {
             email: email,
             subject: subject,
             message: message,
-            });
+        });
 
         return info;
     } catch (error) {

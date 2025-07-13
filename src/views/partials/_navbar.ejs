@@ -1,76 +1,79 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark position-sticky sticky-top" style="z-index: 5000;">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'home' ? 'active' : '' %>"
-             aria-current="page" href="/">Home 🏠</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'dashboard' ? 'active' : '' %>"
-             href="/dashboard">Dashboard ⬛</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'brandProduct' ? 'active' : '' %>"
-             href="/brand-Product">Brand Product 📦</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'contribution' ? 'active' : '' %>"
-             href="/contribution">Contribution 🧾</a>
-        </li>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.page_name === 'home' ? 'active' : '' %>" aria-current="page"
+                        href="/">Home
+                        🏠</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.page_name === 'dashboard' ? 'active' : '' %>"
+                        href="/dashboard">Dashboard ⬛</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.page_name === 'brandProduct' ? 'active' : '' %>"
+                        href="/brand-Product">Brand
+                        Product 📦</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.page_name === 'contribution' ? 'active' : '' %>"
+                        href="/contribution">Contribution 🧾</a>
+                </li>
 
-        <% if (!locals.token) { %>
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'login' ? 'active' : '' %>"
-             href="/login">Login 🛡️</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'register' ? 'active' : '' %>"
-             href="/register">Register 🛡️</a>
-        </li>
-        <% } %>
+                <% if (!locals.token) { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%= locals.page_name === 'login' ? 'active' : '' %>" href="/login">Login
+                            🛡️</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= locals.page_name === 'register' ? 'active' : '' %>"
+                            href="/register">Register 🛡️</a>
+                    </li>
+                    <% } %>
 
-        <li class="nav-item">
-          <a class="nav-link <%= locals.page_name === 'contact' ? 'active' : '' %>"
-             href="/contact">Contact ✉️</a>
-        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= locals.page_name === 'contact' ? 'active' : '' %>"
+                                href="/contact">Contact ✉️</a>
+                        </li>
 
-        <% if (locals.token) { %>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout ↪️</a>
-        </li>
-        <% } %>
+                        <% if (locals.token) { %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Logout ↪️</a>
+                            </li>
+                            <% } %>
 
-        <% if (locals.idAdmin) { %>
-        <li class="nav-item">
-          <a href="#" class="nav-link" onclick="openAdminPanel(); return false;">Admin Panel 🧑‍💻</a>
-        </li>
-        <% } %>
-      </ul>
+                                <% if (locals.idAdmin) { %>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" onclick="openAdminPanel(); return false;">Admin
+                                            Panel 🧑‍💻</a>
+                                    </li>
+                                    <% } %>
+            </ul>
+        </div>
+
+        <a class="navbar-brand" href="/">Product Brand Information System</a>
     </div>
-
-    <a class="navbar-brand" href="/">Product Brand Information System</a>
-  </div>
 </nav>
 
 <script>
-function openAdminPanel() {
-  const w = screen.availWidth;
-  const h = screen.availHeight;
-  const features = `width=${w},height=${h},left=0,top=0,toolbar=0,menubar=0,location=0,status=0,scrollbars=1,resizable=1`;
+    function openAdminPanel() {
+        const w = screen.availWidth;
+        const h = screen.availHeight;
+        const features = `width=${w},height=${h},left=0,top=0,toolbar=0,menubar=0,location=0,status=0,scrollbars=1,resizable=1`;
 
-  const win = window.open('/admin', 'AdminPanel', features);
-  if (win) {
-    win.moveTo(0, 0);
-    win.resizeTo(w, h);
-    win.focus();
-  } else {
-    alert("The browser blocked the pop-up.");
-  }
-}
+        const win = window.open('/admin', 'AdminPanel', features);
+        if (win) {
+            win.moveTo(0, 0);
+            win.resizeTo(w, h);
+            win.focus();
+        } else {
+            alert("The browser blocked the pop-up.");
+        }
+    }
 </script>
